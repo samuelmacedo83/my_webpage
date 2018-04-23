@@ -12,110 +12,29 @@
     
     
     <item>
-      <title>Coisa</title>
-      <link>/tags/coisa/</link>
+      <title>R</title>
+      <link>/tags/r/</link>
       <pubDate>Mon, 26 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/coisa/</guid>
+      <guid>/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Disqus</title>
-      <link>/tags/disqus/</link>
-      <pubDate>Mon, 15 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/disqus/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Google Analytics</title>
-      <link>/tags/google-analytics/</link>
-      <pubDate>Mon, 15 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/google-analytics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Gravatar</title>
-      <link>/tags/gravatar/</link>
-      <pubDate>Mon, 15 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/gravatar/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Hexo Theme</title>
-      <link>/tags/hexo-theme/</link>
-      <pubDate>Mon, 15 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/hexo-theme/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Leva</title>
-      <link>/tags/leva/</link>
+      <title>Spark</title>
+      <link>/tags/spark/</link>
       <pubDate>Mon, 26 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/leva/</guid>
+      <guid>/tags/spark/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Outra</title>
-      <link>/tags/outra/</link>
+      <title>Test</title>
+      <link>/tags/test/</link>
       <pubDate>Mon, 26 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/outra/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Plot</title>
-      <link>/tags/plot/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/tags/plot/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R Markdown</title>
-      <link>/tags/r-markdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/tags/r-markdown/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Regression</title>
-      <link>/tags/regression/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/tags/regression/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Responsive</title>
-      <link>/tags/responsive/</link>
-      <pubDate>Mon, 15 Jun 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/responsive/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Uma</title>
-      <link>/tags/uma/</link>
-      <pubDate>Mon, 26 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/uma/</guid>
+      <guid>/tags/test/</guid>
       <description></description>
     </item>
     
