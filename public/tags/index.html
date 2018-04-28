@@ -18,21 +18,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.37.1 with theme Tranquilpeak 0.4.3-BETA">
-    <title>Archives</title>
+    <title>Tags</title>
     <meta name="author" content="Samuel Macêdo">
     <meta name="keywords" content="">
 
     <link rel="icon" href="https://example.org/favicon.png">
     
-      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://example.org/archives/index.xml">
+      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://example.org/tags/index.xml">
     
 
     
     <meta name="description" content="Hugo tranquilpeak theme demo">
     <meta property="og:description" content="Hugo tranquilpeak theme demo">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Archives">
-    <meta property="og:url" content="/archives/">
+    <meta property="og:title" content="Tags">
+    <meta property="og:url" content="/tags/">
     <meta property="og:site_name" content="Samuel&#39;s website">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Samuel&#39;s website">
@@ -199,37 +199,61 @@
   </div>
 </nav>
 
+      
+
       <div id="main" data-behavior="1"
         class="
                hasCoverMetaIn
                ">
-        <div id="archives" class="main-content-wrap">
+
+        <div id="tags-archives" class="main-content-wrap">
           <form id="filter-form" action="#">
-            <input name="date" type="text" class="form-control input--xlarge" placeholder="Search date (YYYY/MM/DD)" autofocus="autofocus">
+            <input name="tag" type="text" class="form-control input--xlarge" placeholder="Search tag" autofocus="autofocus">
           </form>
-          <h5 class="archive-result text-color-base text-xlarge" data-message-zero="no post found" data-message-one="1 post found" data-message-other="{n} posts found"></h5>
-<section class="boxes">
-  
-    
-    <div class="archive archive-year box" data-date="2018">
-      <h4 class="archive-title" style="text-decoration: none;">2018</h4>
-      
-        <ul class="archive-posts archive-month" data-date="201804">
-          <h5 class="archive-title" style="text-decoration: none;">April</h5>
-          
-            <li class="archive-post archive-day" data-date="20180426">
-              <a class="archive-post-title" href="https://example.org/2018/04/dplyr-basic-functions/">dplyr: basic functions</a>
-            </li>
-          
-        </ul>
-      
-    </div>
-  
-</section>
-        </div>
+          <h4 class="archive-result text-color-base text-xlarge"
+              data-message-zero="no tag found"
+              data-message-one="1 tag found"
+              data-message-other="{n} tags found"></h4>
+
+            <section>
+              
+                <a class="tag tag--primary tag--small" href="#dplyr-list" data-tag="dplyr">
+                  dplyr
+                </a>
+              
+            </section>
+            <section class="boxes">
+              
+                <div id="dplyr-list" class="archive box" data-tag="dplyr">
+                  <h4 class="archive-title">
+                    <a class="link-unstyled" href="dplyr">
+                      dplyr (1)
+                    </a>
+                  </h4>
+                  <ul class="archive-posts">
+                    
+                      <li class="archive-post">
+                        <a class="archive-post-title" href="https://example.org/2018/04/dplyr-basic-functions/">
+                          dplyr: basic functions
+                        </a>
+                        <span class="archive-post-date"> - 
+  April 26, 2018
+</span>
+                      </li>
+                    
+                  </ul>
+                </div>
+              
+           </section>
+         </div>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Samuel Macêdo. All Rights Reserved
+  </span>
+</footer>
+
       </div>
     </div>
-    
     <div id="about">
   <div id="about-card">
     <div id="about-btn-close">
@@ -259,55 +283,6 @@
   </div>
 </div>
 
-    <div id="algolia-search-modal" class="modal-container">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="close-button"><i class="fa fa-close"></i></span>
-      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
-        <span class="searchby-algolia-text text-color-light text-small">by</span>
-        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
-      </a>
-      <i class="search-icon fa fa-search"></i>
-      <form id="algolia-search-form">
-        <input type="text" id="algolia-search-input" name="search"
-          class="form-control input--large search-input" placeholder="Search" />
-      </form>
-    </div>
-    <div class="modal-body">
-      <div class="no-result text-color-light text-center">no post found</div>
-      <div class="results">
-        
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://example.org/2018/04/dplyr-basic-functions/">
-                <h3 class="media-heading">dplyr: basic functions</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Apr 4, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Welcome friend :) In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). To install it, please use:
-install.packages(&quot;dplyr&quot;)library(dplyr)Before I start: as_tibble()Tibble is a modern reimagining of the data.frame. You don’t need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check out here</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-      </div>
-    </div>
-    <div class="modal-footer">
-      <p class="results-count text-medium"
-         data-message-zero="no post found"
-         data-message-one="1 post found"
-         data-message-other="{n} posts found">
-         1 posts found
-      </p>
-    </div>
-  </div>
-</div>
     
   
     
@@ -315,7 +290,8 @@ install.packages(&quot;dplyr&quot;)library(dplyr)Before I start: as_tibble()T
   
 
 
-    
+  </body>
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
@@ -342,7 +318,4 @@ $(document).ready(function() {
 
 
 
-    
-  </body>
 </html>
-
