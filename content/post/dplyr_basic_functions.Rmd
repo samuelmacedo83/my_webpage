@@ -1,0 +1,163 @@
+---
+title: 'dplyr: basic functions'
+author: "Samuel Macêdo"
+date: '2018-04-26'
+categories: ["tutorials"]
+tags: ["dplyr"]
+description: "Take your first step in data manipulation with dplyr package. This tutorial will introduce you the basic functions: select(), filter(), mutate(), transmute(), group_by() and summarise()."
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+Welcome friend :) 
+In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). To install it, please use: 
+
+```{r, eval = FALSE}
+install.packages("dplyr")
+library(dplyr)
+```
+
+```{r include=FALSE}
+library(dplyr)
+```
+
+### Before I start: as_tibble()
+
+Tibble is a modern reimagining of the data.frame. You don't need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check out [here](https://tibble.tidyverse.org/)
+
+```{r as_tibble}
+iris_tbl <- as_tibble(iris)
+```
+
+
+### glimpse()
+
+ This function is similar to str()
+```{r dplyr}
+# see the data frame struct
+glimpse(iris_tbl)
+``` 
+
+### select()
+This function allows you to select those variables you want to use
+```{r}
+# select just one variable
+select(iris_tbl, Petal.Length) 
+```
+```{r}
+# you can use comma to select one or more variables
+select(iris_tbl, Petal.Length, Petal.Width)  
+```
+```{r}
+# you can exclude variables using minus(-)
+select(iris_tbl, -Species) 
+```
+```{r}
+# with pipe
+iris_tbl %>% 
+  select(Petal.Length, Petal.Width)
+```
+```{r}
+# you can use select to rearrange the variables
+iris_tbl %>% 
+  select(Petal.Length, Sepal.Length, 
+         Petal.Width, Sepal.Width)
+```
+
+### filter()
+This function returns only the rows that matching some conditions. Let's see examples!
+```{r filter}
+# for one variable
+iris_tbl %>% 
+  filter(Sepal.Length > 5)
+```
+```{r}
+# for two or more variables you can use comma (AND)
+iris_tbl %>% 
+  filter(Sepal.Length > 5,  Sepal.Width < 4)
+```
+```{r}
+# you can filter by strings with "==" operator
+iris_tbl %>% 
+  filter(Species == "setosa")
+```
+
+### mutate()
+This function allows you to make basic operations in the variable, such as: sum, minus, multiplications and so on. Mutate can also create new variables in the data frame.
+```{r mutate}
+# you can transform one variable
+iris_tbl %>% 
+  mutate(Sepal.Length = Sepal.Length * 2)
+
+```
+
+```{r}
+# you can use comma for two or more trasformations
+iris_tbl %>% 
+  mutate(Sepal.Length = Sepal.Length * 2,
+         Petal.Width = Petal.Width *10)
+```
+
+```{r}
+# you can create any variables as you want
+iris_tbl %>% 
+  mutate(Lengh_rate = Sepal.Length / Petal.Length,
+         Width_rate = Sepal.Width / Petal.Width)
+```
+
+### working together: select, filter and mutate
+```{r}
+iris_tbl %>% 
+  select(Petal.Length, Petal.Width) %>% 
+  filter(Petal.Length > 1.5) %>% 
+  mutate(Petal_rate = Petal.Length / Petal.Width)
+```
+
+### trasmute()
+
+The transmute function also transform or create new variable, like mutate(). The difference beteween them is that trasnmute() delete all variables that it didn't use. In other words, transmute() is like a mutate() plus select(). Let's check out!
+
+```{r transmute_mutate}
+# mutate() remains all variables
+iris_tbl %>% 
+  mutate(Petal.Length = Petal.Length + 1)
+
+```
+```{r}
+# transmute() keep only the variables used
+iris_tbl %>% 
+  transmute(Petal.Length = Petal.Length + 1)
+```
+
+```{r}
+# you can create new variables
+iris_tbl %>% 
+  transmute(Petal_rate = Petal.Length / Petal.Width)
+```
+
+```{r}
+# you can use comma to keep some variables and change the order, like select()
+iris_tbl %>%
+  transmute(Petal_rate = Petal.Length / Petal.Width, Species)
+```
+
+### group_by() and summarise()
+
+These two function working together. The group_by() function only index the elements and summarise() will perform the operations. For the all operations you can use inside summarise(), please look at ?summarise()
+
+```{r summarise}
+# count how many observations for each Species
+iris_tbl %>% 
+  group_by(Species) %>% 
+  summarise(Qtd = n())
+```
+
+```{r}
+# mean of petal lenght for each species
+iris_tbl %>% 
+  group_by(Species) %>% 
+  summarise(Petal.Lenght_mean = mean(Petal.Length))
+```
+

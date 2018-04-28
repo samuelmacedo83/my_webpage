@@ -1,0 +1,372 @@
+---
+title: "Introduce to dplyr package"
+author: "Samuel Macêdo"
+date: '2018-04-26'
+tags: dplyr
+categories: Tutorial
+---
+
+
+
+<div id="installing-dplyr" class="section level2">
+<h2>Installing dplyr</h2>
+<p>To install the package, you can use the button Tools -&gt; Install Packages… or use <code>install.packages(dplyr)</code></p>
+<pre class="r"><code>library(dplyr)
+## 
+## Attaching package: &#39;dplyr&#39;
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+</div>
+<div id="introduce-to-dplyr-functions" class="section level2">
+<h2>Introduce to dplyr functions</h2>
+<p>Here I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise()</p>
+<div id="as_tibble" class="section level4">
+<h4>as_tibble()</h4>
+<p>Tibble is a modern reimagining of the data.frame. You don’t need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check out <a href="https://tibble.tidyverse.org/">here</a></p>
+<pre class="r"><code>iris_tbl &lt;- as_tibble(iris)</code></pre>
+</div>
+<div id="glimpse" class="section level4">
+<h4>glimpse()</h4>
+<p>glimpse function is an alias to str() function</p>
+<pre class="r"><code># See the data frame struct
+glimpse(iris_tbl)
+## Observations: 150
+## Variables: 5
+## $ Sepal.Length &lt;dbl&gt; 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9,...
+## $ Sepal.Width  &lt;dbl&gt; 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1,...
+## $ Petal.Length &lt;dbl&gt; 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5,...
+## $ Petal.Width  &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1,...
+## $ Species      &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, s...</code></pre>
+</div>
+<div id="select" class="section level4">
+<h4>select()</h4>
+<p>This function allows you to select those variables you want to use</p>
+<pre class="r"><code># select just one variable
+select(iris_tbl, Petal.Length) 
+## # A tibble: 150 x 1
+##    Petal.Length
+##           &lt;dbl&gt;
+##  1         1.40
+##  2         1.40
+##  3         1.30
+##  4         1.50
+##  5         1.40
+##  6         1.70
+##  7         1.40
+##  8         1.50
+##  9         1.40
+## 10         1.50
+## # ... with 140 more rows
+
+# you can use comma to select one or more variables
+select(iris_tbl, Petal.Length, Petal.Width)  
+## # A tibble: 150 x 2
+##    Petal.Length Petal.Width
+##           &lt;dbl&gt;       &lt;dbl&gt;
+##  1         1.40       0.200
+##  2         1.40       0.200
+##  3         1.30       0.200
+##  4         1.50       0.200
+##  5         1.40       0.200
+##  6         1.70       0.400
+##  7         1.40       0.300
+##  8         1.50       0.200
+##  9         1.40       0.200
+## 10         1.50       0.100
+## # ... with 140 more rows
+
+# you can exclude variables using minus(-)
+select(iris_tbl, -Species) 
+## # A tibble: 150 x 4
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+##  1         5.10        3.50         1.40       0.200
+##  2         4.90        3.00         1.40       0.200
+##  3         4.70        3.20         1.30       0.200
+##  4         4.60        3.10         1.50       0.200
+##  5         5.00        3.60         1.40       0.200
+##  6         5.40        3.90         1.70       0.400
+##  7         4.60        3.40         1.40       0.300
+##  8         5.00        3.40         1.50       0.200
+##  9         4.40        2.90         1.40       0.200
+## 10         4.90        3.10         1.50       0.100
+## # ... with 140 more rows
+
+# with pipe
+iris_tbl %&gt;% 
+  select(Petal.Length, Petal.Width)
+## # A tibble: 150 x 2
+##    Petal.Length Petal.Width
+##           &lt;dbl&gt;       &lt;dbl&gt;
+##  1         1.40       0.200
+##  2         1.40       0.200
+##  3         1.30       0.200
+##  4         1.50       0.200
+##  5         1.40       0.200
+##  6         1.70       0.400
+##  7         1.40       0.300
+##  8         1.50       0.200
+##  9         1.40       0.200
+## 10         1.50       0.100
+## # ... with 140 more rows
+
+# you can use select to rearrange the variables
+iris_tbl %&gt;% 
+  select(Petal.Length, Sepal.Length, 
+         Petal.Width, Sepal.Width)
+## # A tibble: 150 x 4
+##    Petal.Length Sepal.Length Petal.Width Sepal.Width
+##           &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+##  1         1.40         5.10       0.200        3.50
+##  2         1.40         4.90       0.200        3.00
+##  3         1.30         4.70       0.200        3.20
+##  4         1.50         4.60       0.200        3.10
+##  5         1.40         5.00       0.200        3.60
+##  6         1.70         5.40       0.400        3.90
+##  7         1.40         4.60       0.300        3.40
+##  8         1.50         5.00       0.200        3.40
+##  9         1.40         4.40       0.200        2.90
+## 10         1.50         4.90       0.100        3.10
+## # ... with 140 more rows</code></pre>
+</div>
+<div id="filter" class="section level4">
+<h4>filter()</h4>
+<pre class="r"><code># for one variable
+iris_tbl %&gt;% 
+  filter(Sepal.Length &gt; 5)
+## # A tibble: 118 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1         5.10        3.50         1.40       0.200 setosa 
+##  2         5.40        3.90         1.70       0.400 setosa 
+##  3         5.40        3.70         1.50       0.200 setosa 
+##  4         5.80        4.00         1.20       0.200 setosa 
+##  5         5.70        4.40         1.50       0.400 setosa 
+##  6         5.40        3.90         1.30       0.400 setosa 
+##  7         5.10        3.50         1.40       0.300 setosa 
+##  8         5.70        3.80         1.70       0.300 setosa 
+##  9         5.10        3.80         1.50       0.300 setosa 
+## 10         5.40        3.40         1.70       0.200 setosa 
+## # ... with 108 more rows
+
+# for two or more variables you can use comma (AND)
+iris_tbl %&gt;% 
+  filter(Sepal.Length &gt; 5,  Sepal.Width &lt; 4)
+## # A tibble: 114 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1         5.10        3.50         1.40       0.200 setosa 
+##  2         5.40        3.90         1.70       0.400 setosa 
+##  3         5.40        3.70         1.50       0.200 setosa 
+##  4         5.40        3.90         1.30       0.400 setosa 
+##  5         5.10        3.50         1.40       0.300 setosa 
+##  6         5.70        3.80         1.70       0.300 setosa 
+##  7         5.10        3.80         1.50       0.300 setosa 
+##  8         5.40        3.40         1.70       0.200 setosa 
+##  9         5.10        3.70         1.50       0.400 setosa 
+## 10         5.10        3.30         1.70       0.500 setosa 
+## # ... with 104 more rows
+
+# you can filter strings with &quot;==&quot; operator
+iris_tbl %&gt;% 
+  filter(Species == &quot;setosa&quot;)
+## # A tibble: 50 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1         5.10        3.50         1.40       0.200 setosa 
+##  2         4.90        3.00         1.40       0.200 setosa 
+##  3         4.70        3.20         1.30       0.200 setosa 
+##  4         4.60        3.10         1.50       0.200 setosa 
+##  5         5.00        3.60         1.40       0.200 setosa 
+##  6         5.40        3.90         1.70       0.400 setosa 
+##  7         4.60        3.40         1.40       0.300 setosa 
+##  8         5.00        3.40         1.50       0.200 setosa 
+##  9         4.40        2.90         1.40       0.200 setosa 
+## 10         4.90        3.10         1.50       0.100 setosa 
+## # ... with 40 more rows</code></pre>
+</div>
+<div id="mutate" class="section level4">
+<h4>mutate()</h4>
+<p>This function allows you to make basic opretations in the variable, such as: sum, minus, multiplications and so on. Mutate can also create new variables in the data frame.</p>
+<pre class="r"><code># you can transform on variable
+iris_tbl %&gt;% 
+  mutate(Sepal.Length = Sepal.Length * 2)
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1        10.2         3.50         1.40       0.200 setosa 
+##  2         9.80        3.00         1.40       0.200 setosa 
+##  3         9.40        3.20         1.30       0.200 setosa 
+##  4         9.20        3.10         1.50       0.200 setosa 
+##  5        10.0         3.60         1.40       0.200 setosa 
+##  6        10.8         3.90         1.70       0.400 setosa 
+##  7         9.20        3.40         1.40       0.300 setosa 
+##  8        10.0         3.40         1.50       0.200 setosa 
+##  9         8.80        2.90         1.40       0.200 setosa 
+## 10         9.80        3.10         1.50       0.100 setosa 
+## # ... with 140 more rows
+
+# you can use comma for two or more trasformations
+iris_tbl %&gt;% 
+  mutate(Sepal.Length = Sepal.Length * 2,
+         Petal.Width = Petal.Width *10)
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1        10.2         3.50         1.40          2. setosa 
+##  2         9.80        3.00         1.40          2. setosa 
+##  3         9.40        3.20         1.30          2. setosa 
+##  4         9.20        3.10         1.50          2. setosa 
+##  5        10.0         3.60         1.40          2. setosa 
+##  6        10.8         3.90         1.70          4. setosa 
+##  7         9.20        3.40         1.40          3. setosa 
+##  8        10.0         3.40         1.50          2. setosa 
+##  9         8.80        2.90         1.40          2. setosa 
+## 10         9.80        3.10         1.50          1. setosa 
+## # ... with 140 more rows
+
+# you can create any variables as you want
+iris_tbl %&gt;% 
+  mutate(Lengh_rate = Sepal.Length / Petal.Length,
+         Width_rate = Sepal.Width / Petal.Width)
+## # A tibble: 150 x 7
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species Lengh_rate
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;        &lt;dbl&gt;
+##  1         5.10        3.50         1.40       0.200 setosa        3.64
+##  2         4.90        3.00         1.40       0.200 setosa        3.50
+##  3         4.70        3.20         1.30       0.200 setosa        3.62
+##  4         4.60        3.10         1.50       0.200 setosa        3.07
+##  5         5.00        3.60         1.40       0.200 setosa        3.57
+##  6         5.40        3.90         1.70       0.400 setosa        3.18
+##  7         4.60        3.40         1.40       0.300 setosa        3.29
+##  8         5.00        3.40         1.50       0.200 setosa        3.33
+##  9         4.40        2.90         1.40       0.200 setosa        3.14
+## 10         4.90        3.10         1.50       0.100 setosa        3.27
+## # ... with 140 more rows, and 1 more variable: Width_rate &lt;dbl&gt;</code></pre>
+</div>
+<div id="working-together-select-filter-and-mutate" class="section level4">
+<h4>working together: select, filter and mutate</h4>
+<pre class="r"><code>iris_tbl %&gt;% 
+  select(Petal.Length, Petal.Width) %&gt;% 
+  filter(Petal.Length &gt; 1.5) %&gt;% 
+  mutate(Petal_rate = Petal.Length / Petal.Width)
+## # A tibble: 113 x 3
+##    Petal.Length Petal.Width Petal_rate
+##           &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+##  1         1.70       0.400       4.25
+##  2         1.60       0.200       8.00
+##  3         1.70       0.300       5.67
+##  4         1.70       0.200       8.50
+##  5         1.70       0.500       3.40
+##  6         1.90       0.200       9.50
+##  7         1.60       0.200       8.00
+##  8         1.60       0.400       4.00
+##  9         1.60       0.200       8.00
+## 10         1.60       0.200       8.00
+## # ... with 103 more rows</code></pre>
+</div>
+<div id="trasmute" class="section level4">
+<h4>trasmute()</h4>
+<p>The transmute function also transform or create new variable, like mutate(). The difference beteween them is that trasnmute() delete all variables it didn’t use. In other words, transmute() is like a mutate() plus select(). Let’s check out!</p>
+<pre class="r"><code># mutate() remains all variables
+iris_tbl %&gt;% 
+  mutate(Petal.Length = Petal.Length + 1)
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1         5.10        3.50         2.40       0.200 setosa 
+##  2         4.90        3.00         2.40       0.200 setosa 
+##  3         4.70        3.20         2.30       0.200 setosa 
+##  4         4.60        3.10         2.50       0.200 setosa 
+##  5         5.00        3.60         2.40       0.200 setosa 
+##  6         5.40        3.90         2.70       0.400 setosa 
+##  7         4.60        3.40         2.40       0.300 setosa 
+##  8         5.00        3.40         2.50       0.200 setosa 
+##  9         4.40        2.90         2.40       0.200 setosa 
+## 10         4.90        3.10         2.50       0.100 setosa 
+## # ... with 140 more rows
+
+# transmute() keep only the variables used
+iris_tbl %&gt;% 
+  transmute(Petal.Length = Petal.Length + 1)
+## # A tibble: 150 x 1
+##    Petal.Length
+##           &lt;dbl&gt;
+##  1         2.40
+##  2         2.40
+##  3         2.30
+##  4         2.50
+##  5         2.40
+##  6         2.70
+##  7         2.40
+##  8         2.50
+##  9         2.40
+## 10         2.50
+## # ... with 140 more rows
+
+# you can create new variables
+iris_tbl %&gt;% 
+  transmute(Petal_rate = Petal.Length / Petal.Width)
+## # A tibble: 150 x 1
+##    Petal_rate
+##         &lt;dbl&gt;
+##  1       7.00
+##  2       7.00
+##  3       6.50
+##  4       7.50
+##  5       7.00
+##  6       4.25
+##  7       4.67
+##  8       7.50
+##  9       7.00
+## 10      15.0 
+## # ... with 140 more rows
+
+# you can use comma to keep some variables and change the order, like select()
+iris_tbl %&gt;%
+  transmute(Petal_rate = Petal.Length / Petal.Width, Species)
+## # A tibble: 150 x 2
+##    Petal_rate Species
+##         &lt;dbl&gt; &lt;fct&gt;  
+##  1       7.00 setosa 
+##  2       7.00 setosa 
+##  3       6.50 setosa 
+##  4       7.50 setosa 
+##  5       7.00 setosa 
+##  6       4.25 setosa 
+##  7       4.67 setosa 
+##  8       7.50 setosa 
+##  9       7.00 setosa 
+## 10      15.0  setosa 
+## # ... with 140 more rows</code></pre>
+</div>
+<div id="group_by-and-summarise" class="section level4">
+<h4>group_by() and summarise()</h4>
+<p>These two function working together. The group_by() function only index the elements and summarise() will perform the operations. For the all operations you can use inside summarise(), please look at ?summarise()</p>
+<pre class="r"><code># count how many observations for each Species
+iris_tbl %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(Qtd = n())
+## # A tibble: 3 x 2
+##   Species      Qtd
+##   &lt;fct&gt;      &lt;int&gt;
+## 1 setosa        50
+## 2 versicolor    50
+## 3 virginica     50
+
+# mean of petal lenght for each species
+iris_tbl %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(Petal.Lenght_mean = mean(Petal.Length))
+## # A tibble: 3 x 2
+##   Species    Petal.Lenght_mean
+##   &lt;fct&gt;                  &lt;dbl&gt;
+## 1 setosa                  1.46
+## 2 versicolor              4.26
+## 3 virginica               5.55</code></pre>
+</div>
+</div>

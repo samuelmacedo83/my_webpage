@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.37.1 with theme Tranquilpeak 0.4.3-BETA">
-    <title>Testando1</title>
+    <title>teste dplyr: basic functions</title>
     <meta name="author" content="Samuel Macêdo">
     <meta name="keywords" content="">
 
@@ -30,21 +30,27 @@
     
 
     
-    <meta name="description" content="R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.">
-    <meta property="og:description" content="R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.">
+    <meta name="description" content="knitr::opts_chunk$set(collapse = TRUE)
+
+
+In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise().
+">
+    <meta property="og:description" content="knitr::opts_chunk$set(collapse = TRUE)
+
+
+In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise().
+">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="Testando1">
-    <meta property="og:url" content="/2018/03/testando1/">
+    <meta property="og:title" content="teste dplyr: basic functions">
+    <meta property="og:url" content="/2018/04/teste-dplyr-basic-functions/">
     <meta property="og:site_name" content="Samuel&#39;s website">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Samuel&#39;s website">
-    <meta name="twitter:description" content="R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.">
+    <meta name="twitter:description" content="knitr::opts_chunk$set(collapse = TRUE)
+
+
+In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise().
+">
     
     
 
@@ -219,15 +225,15 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      Testando1
+      teste dplyr: basic functions
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2018-03-26T00:00:00Z">
+      <time itemprop="datePublished" datetime="2018-04-27T00:00:00Z">
         
-  March 26, 2018
+  April 27, 2018
 
       </time>
     
@@ -236,9 +242,7 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
   
     <span>in</span>
     
-      <a class="category-link" href="https://example.org/categories/testing">Testing</a>, 
-    
-      <a class="category-link" href="https://example.org/categories/testinho">testinho</a>
+      <a class="category-link" href="https://example.org/categories/tutorial">tutorial</a>
     
   
 
@@ -248,48 +252,154 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <div id="r-markdown" class="section level1">
-<h1>R Markdown</h1>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-fit &lt;- lm(dist ~ speed, data = cars)
-fit
-## 
-## Call:
-## lm(formula = dist ~ speed, data = cars)
-## 
-## Coefficients:
-## (Intercept)        speed  
-##     -17.579        3.932</code></pre>
-<pre class="r"><code>hist(cars$speed)</code></pre>
-<p><img src="https://example.org/post/testando1_files/figure-html/plot-1.png" width="672" /></p>
-</div>
-<div id="including-plots" class="section level1">
-<h1>Including Plots</h1>
-<p>You can also embed plots. See Figure <a href="#fig:pie">1</a> for example:</p>
-<pre class="r"><code>par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
-  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
-  init.angle = -50, border = NA
-)</code></pre>
-<div class="figure"><span id="fig:pie"></span>
-<img src="https://example.org/post/testando1_files/figure-html/pie-1.png" alt="A fancy pie chart." width="672" />
-<p class="caption">
-Figure 1: A fancy pie chart.
-</p>
-</div>
-</div>
+              <pre><code class="language-r setup, include=FALSE">knitr::opts_chunk$set(collapse = TRUE)
+</code></pre>
 
+<p>In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise().
+</p>
+
+<h2 id="teste">teste</h2>
+
+<p>To install it, please use:</p>
+
+<pre><code class="language-r, eval = FALSE">install.packages(&quot;dplyr&quot;)
+library(dplyr)
+</code></pre>
+
+<pre><code class="language-r include=FALSE">library(dplyr)
+</code></pre>
+
+<h3 id="before-i-start-as-tibble">Before I start: as_tibble()</h3>
+
+<p>Tibble is a modern reimagining of the data.frame. You don&rsquo;t need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check out <a href="https://tibble.tidyverse.org/">here</a></p>
+
+<pre><code class="language-r as_tibble">iris_tbl &lt;- as_tibble(iris)
+</code></pre>
+
+<h3 id="glimpse">glimpse()</h3>
+
+<p>This function is similar to str()</p>
+
+<pre><code class="language-r dplyr"># see the data frame struct
+glimpse(iris_tbl)
+</code></pre>
+
+<h3 id="select">select()</h3>
+
+<p>This function allows you to select those variables you want to use</p>
+
+<pre><code class="language-r"># select just one variable
+select(iris_tbl, Petal.Length) 
+</code></pre>
+
+<pre><code class="language-r"># you can use comma to select one or more variables
+select(iris_tbl, Petal.Length, Petal.Width)  
+</code></pre>
+
+<pre><code class="language-r"># you can exclude variables using minus(-)
+select(iris_tbl, -Species) 
+</code></pre>
+
+<pre><code class="language-r"># with pipe
+iris_tbl %&gt;% 
+  select(Petal.Length, Petal.Width)
+</code></pre>
+
+<pre><code class="language-r"># you can use select to rearrange the variables
+iris_tbl %&gt;% 
+  select(Petal.Length, Sepal.Length, 
+         Petal.Width, Sepal.Width)
+</code></pre>
+
+<h3 id="filter">filter()</h3>
+
+<p>This function returns only the rows that matching some conditions. Let&rsquo;s see examples!</p>
+
+<pre><code class="language-r filter"># for one variable
+iris_tbl %&gt;% 
+  filter(Sepal.Length &gt; 5)
+</code></pre>
+
+<pre><code class="language-r"># for two or more variables you can use comma (AND)
+iris_tbl %&gt;% 
+  filter(Sepal.Length &gt; 5,  Sepal.Width &lt; 4)
+</code></pre>
+
+<pre><code class="language-r"># you can filter by strings with &quot;==&quot; operator
+iris_tbl %&gt;% 
+  filter(Species == &quot;setosa&quot;)
+</code></pre>
+
+<h3 id="mutate">mutate()</h3>
+
+<p>This function allows you to make basic operations in the variable, such as: sum, minus, multiplications and so on. Mutate can also create new variables in the data frame.</p>
+
+<pre><code class="language-r mutate"># you can transform one variable
+iris_tbl %&gt;% 
+  mutate(Sepal.Length = Sepal.Length * 2)
+
+</code></pre>
+
+<pre><code class="language-r"># you can use comma for two or more trasformations
+iris_tbl %&gt;% 
+  mutate(Sepal.Length = Sepal.Length * 2,
+         Petal.Width = Petal.Width *10)
+</code></pre>
+
+<pre><code class="language-r"># you can create any variables as you want
+iris_tbl %&gt;% 
+  mutate(Lengh_rate = Sepal.Length / Petal.Length,
+         Width_rate = Sepal.Width / Petal.Width)
+</code></pre>
+
+<h3 id="working-together-select-filter-and-mutate">working together: select, filter and mutate</h3>
+
+<pre><code class="language-r">iris_tbl %&gt;% 
+  select(Petal.Length, Petal.Width) %&gt;% 
+  filter(Petal.Length &gt; 1.5) %&gt;% 
+  mutate(Petal_rate = Petal.Length / Petal.Width)
+</code></pre>
+
+<h3 id="trasmute">trasmute()</h3>
+
+<p>The transmute function also transform or create new variable, like mutate(). The difference beteween them is that trasnmute() delete all variables that it didn&rsquo;t use. In other words, transmute() is like a mutate() plus select(). Let&rsquo;s check out!</p>
+
+<pre><code class="language-r transmute_mutate"># mutate() remains all variables
+iris_tbl %&gt;% 
+  mutate(Petal.Length = Petal.Length + 1)
+
+</code></pre>
+
+<pre><code class="language-r"># transmute() keep only the variables used
+iris_tbl %&gt;% 
+  transmute(Petal.Length = Petal.Length + 1)
+</code></pre>
+
+<pre><code class="language-r"># you can create new variables
+iris_tbl %&gt;% 
+  transmute(Petal_rate = Petal.Length / Petal.Width)
+</code></pre>
+
+<pre><code class="language-r"># you can use comma to keep some variables and change the order, like select()
+iris_tbl %&gt;%
+  transmute(Petal_rate = Petal.Length / Petal.Width, Species)
+</code></pre>
+
+<h3 id="group-by-and-summarise">group_by() and summarise()</h3>
+
+<p>These two function working together. The group_by() function only index the elements and summarise() will perform the operations. For the all operations you can use inside summarise(), please look at ?summarise()</p>
+
+<pre><code class="language-r summarise"># count how many observations for each Species
+iris_tbl %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(Qtd = n())
+</code></pre>
+
+<pre><code class="language-r"># mean of petal lenght for each species
+iris_tbl %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(Petal.Lenght_mean = mean(Petal.Length))
+</code></pre>
               
             </div>
           </div>
@@ -301,9 +411,7 @@ Figure 1: A fancy pie chart.
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">TAGGED IN</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://example.org/tags/r/">R</a>
-
-  <a class="tag tag--primary tag--small" href="https://example.org/tags/test/">test</a>
+  <a class="tag tag--primary tag--small" href="https://example.org/tags/dplyr/">dplyr</a>
 
                   </div>
                 
@@ -316,7 +424,7 @@ Figure 1: A fancy pie chart.
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/04/dplyr-basic-functions/" data-tooltip="dplyr: basic functions">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -324,7 +432,7 @@ Figure 1: A fancy pie chart.
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/03/testando3/" data-tooltip="Testando3">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/04/introduce-to-dplyr-package/" data-tooltip="Introduce to dplyr package">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -342,19 +450,19 @@ Figure 1: A fancy pie chart.
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://example.org/2018/03/testando1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://example.org/2018/04/teste-dplyr-basic-functions/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://example.org/2018/03/testando1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://example.org/2018/04/teste-dplyr-basic-functions/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://example.org/2018/03/testando1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://example.org/2018/04/teste-dplyr-basic-functions/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -402,7 +510,7 @@ Figure 1: A fancy pie chart.
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/04/dplyr-basic-functions/" data-tooltip="dplyr: basic functions">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -410,7 +518,7 @@ Figure 1: A fancy pie chart.
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/03/testando3/" data-tooltip="Testando3">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://example.org/2018/04/introduce-to-dplyr-package/" data-tooltip="Introduce to dplyr package">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -428,19 +536,19 @@ Figure 1: A fancy pie chart.
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://example.org/2018/03/testando1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://example.org/2018/04/teste-dplyr-basic-functions/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://example.org/2018/03/testando1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://example.org/2018/04/teste-dplyr-basic-functions/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://example.org/2018/03/testando1/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://example.org/2018/04/teste-dplyr-basic-functions/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -470,19 +578,19 @@ Figure 1: A fancy pie chart.
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fexample.org%2F2018%2F03%2Ftestando1%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fexample.org%2F2018%2F04%2Fteste-dplyr-basic-functions%2F">
           <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fexample.org%2F2018%2F03%2Ftestando1%2F">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fexample.org%2F2018%2F04%2Fteste-dplyr-basic-functions%2F">
           <i class="fa fa-twitter"></i><span>Share on Twitter</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fexample.org%2F2018%2F03%2Ftestando1%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fexample.org%2F2018%2F04%2Fteste-dplyr-basic-functions%2F">
           <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
         </a>
       </li>
@@ -685,9 +793,9 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = 'https:\/\/example.org\/2018\/03\/testando1\/';
+          this.page.url = 'https:\/\/example.org\/2018\/04\/teste-dplyr-basic-functions\/';
           
-            this.page.identifier = '\/2018\/03\/testando1\/'
+            this.page.identifier = '\/2018\/04\/teste-dplyr-basic-functions\/'
           
         };
         (function() {
