@@ -11,7 +11,8 @@ description: "Take your first step in data manipulation with dplyr package. This
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-Welcome friend :) 
+Welcome friend :)
+
 In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). To install it, please use: 
 
 ```{r, eval = FALSE}
