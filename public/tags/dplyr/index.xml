@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dplyr on Samuel&#39;s website</title>
-    <link>https://example.org/tags/dplyr/</link>
+    <link>/tags/dplyr/</link>
     <description>Recent content in Dplyr on Samuel&#39;s website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 26 Apr 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://example.org/tags/dplyr/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/dplyr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>dplyr: basic functions</title>
-      <link>https://example.org/2018/04/dplyr-basic-functions/</link>
+      <link>/2018/04/dplyr-basic-functions/</link>
       <pubDate>Thu, 26 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://example.org/2018/04/dplyr-basic-functions/</guid>
+      <guid>/2018/04/dplyr-basic-functions/</guid>
       <description>Welcome friend :) In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). To install it, please use:
 install.packages(&amp;quot;dplyr&amp;quot;)library(dplyr)Before I start: as_tibble()Tibble is a modern reimagining of the data.frame. You don’t need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check out here</description>
     </item>
