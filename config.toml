@@ -18,8 +18,8 @@ languageCode = "en-us"
 defaultContentLanguage = "en-us"
 title = "Samuel's website"
 theme = "hugo-tranquilpeak-theme"
-disqusShortname = "hugo-tranquilpeak-theme"
-# googleAnalytics = "UA-123-45"
+disqusShortname = "Your R place in R"
+googleAnalytics = "UA-118473149-1"
 paginate = 7
 canonifyurls = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
@@ -127,7 +127,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # If false it will flat categories.
   hierarchicalCategories = true
 
-  description = "Hugo tranquilpeak theme demo"
+  description = "Your R place in R"
 
   # Customization
   # Define the behavior of the sidebar
