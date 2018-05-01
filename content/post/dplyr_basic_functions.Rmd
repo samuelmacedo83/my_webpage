@@ -4,7 +4,7 @@ author: "Samuel Macêdo"
 date: '2018-04-26'
 categories: ["tutorials"]
 tags: ["dplyr"]
-description: "Take your first step in data manipulation with dplyr package. This tutorial will introduce you the basic functions: select(), filter(), mutate(), transmute(), group_by() and summarise()."
+description: "Take your first step in data manipulation with dplyr package. This tutorial will present you the basic functions: select(), filter(), mutate(), transmute(), group_by() and summarise()."
 ---
 
 ```{r setup, include=FALSE}
