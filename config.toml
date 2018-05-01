@@ -199,22 +199,22 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   [[params.sharingOptions]]
     name = "Facebook"
     icon = "fa-facebook-official"
-    url = "https://www.facebook.com/sharer/sharer.php?u=%s"
+    url = "https://www.facebook.com/sharer/sharer.php?u=https://samuelmacedo.netlify.com%s"
 
   [[params.sharingOptions]]
     name = "Twitter"
     icon = "fa-twitter"
-    url = "https://twitter.com/intent/tweet?text=%s"
+    url = "https://twitter.com/intent/tweet?text=https://samuelmacedo.netlify.com%s"
 
-  [[params.sharingOptions]]
-    name = "Google+"
-    icon = "fa-google-plus"
-    url = "https://plus.google.com/share?url=%s"
+#  [[params.sharingOptions]]
+#    name = "Google+"
+#    icon = "fa-google-plus"
+#    url = "https://plus.google.com/share?url=%s"
     
   [[params.sharingOptions]]
     name = "LinkedIn"
     icon = "fa-linkedin"
-    url = "https://www.linkedin.com/shareArticle?url=%s"
+    url = "https://www.linkedin.com/shareArticle?url=https://samuelmacedo.netlify.com%s"
 
   [params.header.rightLink]
     class = ""

@@ -168,6 +168,7 @@ iris_tbl %>%
 
 ## That's all folks
 
-If you still have any doubts or somethig to contribute, feel free to contact at `samuelmacedo@recife.ifpe.edu.br`.
+Have you liked it? You can share this tutorial with your colleagues using the buttons below.
+If you still have any doubts or something to contribute, feel free to contact at `samuelmacedo@recife.ifpe.edu.br`.
 
 See ya!
