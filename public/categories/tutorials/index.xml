@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tutorials on Samuel&#39;s website</title>
+    <title>Tutorials on Samuel Macêdo</title>
     <link>/categories/tutorials/</link>
-    <description>Recent content in Tutorials on Samuel&#39;s website</description>
+    <description>Recent content in Tutorials on Samuel Macêdo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 26 Apr 2018 00:00:00 +0000</lastBuildDate>
@@ -17,9 +17,11 @@
       <pubDate>Thu, 26 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/04/dplyr-basic-functions/</guid>
-      <description>Welcome friend :)
-In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). To install it, please use:
-install.packages(&amp;quot;dplyr&amp;quot;)library(dplyr)Before I start: as_tibble()Tibble is a modern reimagining of the data.frame. You don’t need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check out here</description>
+      <description>Welcome, friend :)
+In this tutorial, I am going to present you the basic functions in the dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise().
+If you have any doubts, don’t hesitate to contact me on samuelmacedo@recife.ifpe.br.
+Let’s get to action…first of all To install it, please use the commands below:
+install.packages(&amp;quot;dplyr&amp;quot;)library(dplyr)Before I start: as_tibble()Tibble is a modern reimagining of the data.frame. You don’t need to change your data.</description>
     </item>
     
   </channel>

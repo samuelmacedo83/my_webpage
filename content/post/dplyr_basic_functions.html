@@ -9,18 +9,20 @@ description: "Take your first step in data manipulation with dplyr package. This
 
 
 
-<p>Welcome friend :)</p>
-<p>In this tutorial, I go to introduce you the basic functions in dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). To install it, please use:</p>
+<p>Welcome, friend :)</p>
+<p>In this tutorial, I am going to present you the basic functions in the dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise().</p>
+<p>If you have any doubts, don’t hesitate to contact me on <code>samuelmacedo@recife.ifpe.br</code>.</p>
+<p>Let’s get to action…first of all To install it, please use the commands below:</p>
 <pre class="r"><code>install.packages(&quot;dplyr&quot;)
 library(dplyr)</code></pre>
 <div id="before-i-start-as_tibble" class="section level3">
 <h3>Before I start: as_tibble()</h3>
-<p>Tibble is a modern reimagining of the data.frame. You don’t need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check out <a href="https://tibble.tidyverse.org/">here</a></p>
+<p>Tibble is a modern reimagining of the data.frame. You don’t need to change your data.frame to tibble to use dplyr, but it is strongly recommended. For more information about its properties please check <a href="https://tibble.tidyverse.org/">this</a> out.</p>
 <pre class="r"><code>iris_tbl &lt;- as_tibble(iris)</code></pre>
 </div>
 <div id="glimpse" class="section level3">
 <h3>glimpse()</h3>
-<p>This function is similar to str()</p>
+<p>This function is similar to str().</p>
 <pre class="r"><code># see the data frame struct
 glimpse(iris_tbl)
 ## Observations: 150
@@ -33,7 +35,7 @@ glimpse(iris_tbl)
 </div>
 <div id="select" class="section level3">
 <h3>select()</h3>
-<p>This function allows you to select those variables you want to use</p>
+<p>This function allows you to select the variables you want to work with.</p>
 <pre class="r"><code># select just one variable
 select(iris_tbl, Petal.Length) 
 ## # A tibble: 150 x 1
@@ -50,7 +52,7 @@ select(iris_tbl, Petal.Length)
 ##  9         1.40
 ## 10         1.50
 ## # ... with 140 more rows</code></pre>
-<pre class="r"><code># you can use comma to select one or more variables
+<pre class="r"><code># you can use commas to select one or more variables
 select(iris_tbl, Petal.Length, Petal.Width)  
 ## # A tibble: 150 x 2
 ##    Petal.Length Petal.Width
@@ -120,7 +122,7 @@ iris_tbl %&gt;%
 </div>
 <div id="filter" class="section level3">
 <h3>filter()</h3>
-<p>This function returns only the rows that matching some conditions. Let’s see examples!</p>
+<p>This function returns only the rows that match some conditions. Let’s see examples!</p>
 <pre class="r"><code># for one variable
 iris_tbl %&gt;% 
   filter(Sepal.Length &gt; 5)
@@ -138,7 +140,7 @@ iris_tbl %&gt;%
 ##  9         5.10        3.80         1.50       0.300 setosa 
 ## 10         5.40        3.40         1.70       0.200 setosa 
 ## # ... with 108 more rows</code></pre>
-<pre class="r"><code># for two or more variables you can use comma (AND)
+<pre class="r"><code># for two or more variables you can use a comma (equivalent to the AND operator)
 iris_tbl %&gt;% 
   filter(Sepal.Length &gt; 5,  Sepal.Width &lt; 4)
 ## # A tibble: 114 x 5
@@ -175,8 +177,8 @@ iris_tbl %&gt;%
 </div>
 <div id="mutate" class="section level3">
 <h3>mutate()</h3>
-<p>This function allows you to make basic operations in the variable, such as: sum, minus, multiplications and so on. Mutate can also create new variables in the data frame.</p>
-<pre class="r"><code># you can transform one variable
+<p>This function allows you to make basic operations in the variable, such as: summation, subtraction, multiplications and so on. Mutate can also create new variables in the data frame.</p>
+<pre class="r"><code># you can transform a single variable
 iris_tbl %&gt;% 
   mutate(Sepal.Length = Sepal.Length * 2)
 ## # A tibble: 150 x 5
@@ -193,7 +195,7 @@ iris_tbl %&gt;%
 ##  9         8.80        2.90         1.40       0.200 setosa 
 ## 10         9.80        3.10         1.50       0.100 setosa 
 ## # ... with 140 more rows</code></pre>
-<pre class="r"><code># you can use comma for two or more trasformations
+<pre class="r"><code># you can use commas for two or more trasformations
 iris_tbl %&gt;% 
   mutate(Sepal.Length = Sepal.Length * 2,
          Petal.Width = Petal.Width *10)
@@ -211,7 +213,7 @@ iris_tbl %&gt;%
 ##  9         8.80        2.90         1.40          2. setosa 
 ## 10         9.80        3.10         1.50          1. setosa 
 ## # ... with 140 more rows</code></pre>
-<pre class="r"><code># you can create any variables as you want
+<pre class="r"><code># you can create any variables you want
 iris_tbl %&gt;% 
   mutate(Lengh_rate = Sepal.Length / Petal.Length,
          Width_rate = Sepal.Width / Petal.Width)
@@ -230,8 +232,8 @@ iris_tbl %&gt;%
 ## 10         4.90        3.10         1.50       0.100 setosa        3.27
 ## # ... with 140 more rows, and 1 more variable: Width_rate &lt;dbl&gt;</code></pre>
 </div>
-<div id="working-together-select-filter-and-mutate" class="section level3">
-<h3>working together: select, filter and mutate</h3>
+<div id="working-together-select-filter-and-mutate." class="section level3">
+<h3>working together: select(), filter(), and mutate().</h3>
 <pre class="r"><code>iris_tbl %&gt;% 
   select(Petal.Length, Petal.Width) %&gt;% 
   filter(Petal.Length &gt; 1.5) %&gt;% 
@@ -253,8 +255,8 @@ iris_tbl %&gt;%
 </div>
 <div id="trasmute" class="section level3">
 <h3>trasmute()</h3>
-<p>The transmute function also transform or create new variable, like mutate(). The difference beteween them is that trasnmute() delete all variables that it didn’t use. In other words, transmute() is like a mutate() plus select(). Let’s check out!</p>
-<pre class="r"><code># mutate() remains all variables
+<p>The transmute function also transforms or creates new variables, like mutate(). The difference betewen them is that transnmute() deletes all variables that it didn’t use. In other words, transmute() is like a mutate() plus select(). Let’s check it out!</p>
+<pre class="r"><code># mutate() keeps all variables
 iris_tbl %&gt;% 
   mutate(Petal.Length = Petal.Length + 1)
 ## # A tibble: 150 x 5
@@ -271,7 +273,7 @@ iris_tbl %&gt;%
 ##  9         4.40        2.90         2.40       0.200 setosa 
 ## 10         4.90        3.10         2.50       0.100 setosa 
 ## # ... with 140 more rows</code></pre>
-<pre class="r"><code># transmute() keep only the variables used
+<pre class="r"><code># transmute() keeps only the variables used
 iris_tbl %&gt;% 
   transmute(Petal.Length = Petal.Length + 1)
 ## # A tibble: 150 x 1
@@ -305,27 +307,28 @@ iris_tbl %&gt;%
 ##  9       7.00
 ## 10      15.0 
 ## # ... with 140 more rows</code></pre>
-<pre class="r"><code># you can use comma to keep some variables and change the order, like select()
+<pre class="r"><code># you can trasmumte more than one variable using commas. Notice that the order of the variables in the data.frame is the same as the order written in the code.
 iris_tbl %&gt;%
-  transmute(Petal_rate = Petal.Length / Petal.Width, Species)
+  transmute(Species,
+            Petal_rate = Petal.Length / Petal.Width)
 ## # A tibble: 150 x 2
-##    Petal_rate Species
-##         &lt;dbl&gt; &lt;fct&gt;  
-##  1       7.00 setosa 
-##  2       7.00 setosa 
-##  3       6.50 setosa 
-##  4       7.50 setosa 
-##  5       7.00 setosa 
-##  6       4.25 setosa 
-##  7       4.67 setosa 
-##  8       7.50 setosa 
-##  9       7.00 setosa 
-## 10      15.0  setosa 
+##    Species Petal_rate
+##    &lt;fct&gt;        &lt;dbl&gt;
+##  1 setosa        7.00
+##  2 setosa        7.00
+##  3 setosa        6.50
+##  4 setosa        7.50
+##  5 setosa        7.00
+##  6 setosa        4.25
+##  7 setosa        4.67
+##  8 setosa        7.50
+##  9 setosa        7.00
+## 10 setosa       15.0 
 ## # ... with 140 more rows</code></pre>
 </div>
 <div id="group_by-and-summarise" class="section level3">
 <h3>group_by() and summarise()</h3>
-<p>These two function working together. The group_by() function only index the elements and summarise() will perform the operations. For the all operations you can use inside summarise(), please look at ?summarise()</p>
+<p>These two functions work together. The group_by() function only indexes the elements, while summarise() performs the operations. To know the all operations you can use inside summarise(), please look up <code>?summarise()</code></p>
 <pre class="r"><code># count how many observations for each Species
 iris_tbl %&gt;% 
   group_by(Species) %&gt;% 
@@ -336,7 +339,7 @@ iris_tbl %&gt;%
 ## 1 setosa        50
 ## 2 versicolor    50
 ## 3 virginica     50</code></pre>
-<pre class="r"><code># mean of petal lenght for each species
+<pre class="r"><code># mean of petal length for each species
 iris_tbl %&gt;% 
   group_by(Species) %&gt;% 
   summarise(Petal.Lenght_mean = mean(Petal.Length))
@@ -346,4 +349,9 @@ iris_tbl %&gt;%
 ## 1 setosa                  1.46
 ## 2 versicolor              4.26
 ## 3 virginica               5.55</code></pre>
+</div>
+<div id="thats-all-folks" class="section level2">
+<h2>That’s all folks</h2>
+<p>If you still have any doubts or somethig to contribute, feel free to contact at <code>samuelmacedo@recife.ifpe.edu.br</code>.</p>
+<p>See ya!</p>
 </div>

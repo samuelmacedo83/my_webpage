@@ -16,9 +16,9 @@
 baseURL = "/"
 languageCode = "en-us"
 defaultContentLanguage = "en-us"
-title = "Samuel's website"
+title = "Samuel Macêdo"
 theme = "hugo-tranquilpeak-theme"
-disqusShortname = "Your R place in R"
+disqusShortname = "Your R corner... in R"
 googleAnalytics = "UA-118473149-1"
 paginate = 7
 canonifyurls = true
@@ -127,7 +127,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # If false it will flat categories.
   hierarchicalCategories = true
 
-  description = "Your R place in R"
+  description = "Your R corner... in R"
 
   # Customization
   # Define the behavior of the sidebar
