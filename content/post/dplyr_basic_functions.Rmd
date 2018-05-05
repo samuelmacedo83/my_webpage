@@ -4,7 +4,10 @@ author: "Samuel Macêdo"
 date: '2018-04-26'
 categories: ["tutorials"]
 tags: ["dplyr"]
-description: "Take your first step in data manipulation with dplyr package. This tutorial will present you the basic functions: select(), filter(), mutate(), transmute(), group_by() and summarise()."
+description: "Take your first step in data manipulation with dplyr. This tutorial will present you the basic functions: select(), filter(), mutate(), transmute(), group_by() and summarise()."
+#gallery: "hex-dplyr.jpg"
+#thumbnailImagePosition: left
+#thumbnailImage: "images/abstract_1.jpg"
 ---
 
 ```{r setup, include=FALSE}
@@ -168,7 +171,7 @@ iris_tbl %>%
 
 ## That's all folks
 
-Have you liked it? You can share this tutorial with your colleagues using the buttons below.
+Liked it? You can share this tutorial using the buttons below.
 If you still have any doubts or something to contribute, feel free to contact at `samuelmacedo@recife.ifpe.edu.br`.
 
 See ya!

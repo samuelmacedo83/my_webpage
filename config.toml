@@ -40,14 +40,17 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   job = "Professor at IFPE"
   location = "Recife - Brazil"
   # Your Gravatar email. Overwrite `author.picture` everywhere in the blog
-  gravatarEmail = "samuelmacedo@recife.ifpe.edu.br"
+  #gravatarEmail = "samuelmacedo@recife.ifpe.edu.br"
+  #gravatarEmail = "thibaud.lepretre@gmail.com"
   # Your profile picture
   # Overwritten by your gravatar image if `author.gravatarEmail` is filled
-  picture = "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png"
+  picture = "images/cosmos.jpg"
+  #picture = "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png"
   # Your Twitter username without the @. E.g : thibaudlepretre
   # twitter = "thibaudlepretre"
   # Your google plus profile id. E.g : +ThibaudLepretre or 114625208755123718311
   # googlePlus = "+ThibaudLepretre"
+  
 
 # Menu Configuration
 [[menu.main]]
@@ -114,23 +117,22 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # Months (not work with short month like "jan", "feb", etc) are translated if translation exists on i18n folders
   # Default format is: January 2, 2006 
   # dateFormat = "2 January 2006"
-
-  # Global keywords configuration. Following keywords will be add to every pages
+    # Global keywords configuration. Following keywords will be add to every pages
   # keywords = ["development", "next-gen"]
-
+  #showSocial = false
   # Syntax highlighter, possible choice between: "highlight.js" (recommanded) and "prism.js" (experimental)
   # You can comment it to disable syntax highlighting
   syntaxHighlighter = "highlight.js"
 
   # Hide sidebar on all article page to let article take full width to improve reading, and enjoy wide images and cover images. (true: enable, false: disable)
   clearReading = true
-
+ # thumbnailImage = "images/abstract_1.jpg"
   # Define categories will create hierarchy between parents: `categories = ["foo", "bar"]` will consider "bar" a sub-category of "foo". 
   # If false it will flat categories.
   hierarchicalCategories = true
 
   description = "Your R corner... in R!"
-
+  #gallery = "abstract_1.jpg"
   # Customization
   # Define the behavior of the sidebar
   # 1: Display extra large sidebar on extra large screen, large sidebar on large screen,
@@ -158,7 +160,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   imageGallery = true
 
   # Display thumbnail image of each post on index pages (false: disabled, true: enabled)
-  thumbnailImage = true
+  thumbnailImage = false
   # Display thumbnail image at the right of title in index pages (`right`, `left` or `bottom`)
   # Set this value to `right` if you have old posts to keep the old style on them
   # and define `thumbnailImagePosition` on a post to overwrite this setting
@@ -166,7 +168,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # Automatically select the cover image or the first photo from the gallery of a post if there is no thumbnail image as the thumbnail image
   # Set this value to `true` if you have old posts that use the cover image or the first photo as the thumbnail image
   # and set `autoThumbnailImage` to `false` on a post to overwrite this setting
-  autoThumbnailImage = true
+  autoThumbnailImage = false
 
   # Your favicon path, default is "/favicon.png"
   # favicon = "/favicon.png"
@@ -217,14 +219,23 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     icon = "fa-linkedin"
     url = "https://www.linkedin.com/shareArticle?url=https://samuelmacedo.netlify.com%s"
 
-  [params.header.rightLink]
-    class = ""
-    icon = ""
-    url = "/#about"
+ # [params.header.rightLink]
+#    class = ""
+#    icon = ""
+#    url = "images/abstract_1.jpg"
+
+  #[params.header.rightLink]
+  #class = "open-algolia-search"
+  #icon = "search"
+  #url = "/#search"
+
 
   # Customize link of author avatar in sidebar
   # [params.sidebar.profile]
   #   url = "/#about"
+
+ #  [params.sidebar.profile]
+   #  url = "C:/Users/dmmad/Dropbox/Pesquisa/R/my_website/public/images/abstract_1.jpg"
 
   # Customize copyright value "© 2017 <CUSTOMIZATION>. All Rights Reserved"
   # [params.footer]
