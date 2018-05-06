@@ -37,14 +37,14 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [author]
   name = "Samuel Macêdo"
   bio = "Data scientist and R developer"
-  job = "Professor at IFPE"
+  job = "samuelmacedo@recife.ifpe.edu.br"
   location = "Recife - Brazil"
   # Your Gravatar email. Overwrite `author.picture` everywhere in the blog
   #gravatarEmail = "samuelmacedo@recife.ifpe.edu.br"
   #gravatarEmail = "thibaud.lepretre@gmail.com"
   # Your profile picture
   # Overwritten by your gravatar image if `author.gravatarEmail` is filled
-  picture = "images/cosmos.jpg"
+  picture = "images/letter_r.jpg"
   #picture = "https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png"
   # Your Twitter username without the @. E.g : thibaudlepretre
   # twitter = "thibaudlepretre"
@@ -219,10 +219,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     icon = "fa-linkedin"
     url = "https://www.linkedin.com/shareArticle?url=https://samuelmacedo.netlify.com%s"
 
- # [params.header.rightLink]
-#    class = ""
-#    icon = ""
-#    url = "images/abstract_1.jpg"
+  [params.header.rightLink]
+     class = ""
+     icon = ""
+     url = "/#home"
 
   #[params.header.rightLink]
   #class = "open-algolia-search"

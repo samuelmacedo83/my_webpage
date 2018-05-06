@@ -4,7 +4,7 @@
       <i class="fa fa-remove"></i>
     </div>
     {{ with ($.Scratch.Get "authorPicture") }}
-      <img id="about-card-picture" src="{{ . }}{{ if in . "//www.gravatar.com/avatar/" }}?s=110{{ end }}" alt="{{ i18n "global.author_picture" }}" />
+      <img id="about-card-picture" src="images/my_image.jpg" alt="{{ i18n "global.author_picture" }}" />
     {{ end }}
     <h4 id="about-card-name">{{ .Site.Author.name }}</h4>
     {{ with .Site.Author.bio }}
@@ -12,17 +12,9 @@
     {{ end }}
     {{ with .Site.Author.job }}
       <div id="about-card-job">
-        <i class="fa fa-briefcase"></i>
-        <br/>
-        {{ . | markdownify }}
+        <i class="fa fa-envelope"></i>
       </div>
-    {{ end }}
-    {{ with .Site.Author.location }}
-      <div id="about-card-location">
-        <i class="fa fa-map-marker"></i>
-        <br/>
-        {{ . }}
-      </div>
+      <div id="email_job" align="center"> {{ . | markdownify }} </div>
     {{ end }}
   </div>
 </div>
