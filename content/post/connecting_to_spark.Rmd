@@ -1,0 +1,98 @@
+---
+title: 'sparklyr: connecting to your local machine'
+author: "Samuel Macêdo"
+date: '2018-05-16'
+categories: ["tutorials"]
+tags: ["sparklyr"]
+description: "A brief tutorial on how you can connect spark in your local machine."
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+
+options(scipen=999)
+```
+
+Welcome, friend :)
+
+In this tutorial, I am going to present you how to connect spark with R in your local machine. This will be a very brief tutorial but you will need it to understand when you read the next tutorials about feature transformation, supervised and unsupervised learning. If you have any doubts, don’t hesitate to contact me on `samuelmacedo@recife.ifpe.edu.br`.
+
+Let’s get to action… to do this task I use the [sparklyr](http://spark.rstudio.com/) package. To install it, please use the commands below:
+
+```{r installing_package}
+install.packages("sparklyr")
+library(sparklyr)
+```
+
+# Downloading spark
+
+If you know anything about spark and hadoop (just like me in the beginning) your best shot is installing by R. Use this:
+
+```{r installing_spark, eval=FALSE}
+# this will install the newest one
+spark_install()
+
+# if you want another version, use this to know which one is available
+spark_available_versions(show_hadoop = TRUE)
+
+# if you want to unnistall, you need to specify the version of spark and hadoop, check it out
+spark_uninstall(version = "2.3.0", hadoop_version = "2.7")
+
+# if you know what versions is already inslalled in your machine
+spark_installed_versions()
+```
+
+# Connecting to spark
+
+We need to able a connection between spark and R. For doing this in local mode, use this: 
+
+```{r connecting_ spark}
+sc <- spark_connect(master = "local")
+```
+
+# Managing your data between spark and R
+
+Now that you have a connection, you need to add your data frames to spark. Let's check it out!
+
+```{r copy_and_collect}
+# use this to add your data to spark
+iris_tbl <- sdf_copy_to(sc, iris, name = "iris_tbl", memory = FALSE)
+
+# if you want your spark data frame go back to R
+library(dplyr)
+collect(iris_tbl)
+```
+
+Please, note that I use `memory = FALSE` in `sdf_copy_to`. The default for `memory` is true but if you have a huge data frame use `FALSE` instead.
+
+# spark_web()
+
+This function will show you a report about your connection. It is a good function to use when you feel confortable how spark works. 
+
+```{r spark_web}
+# obtain reports about what is happening to your conection
+spark_web(sc)
+```
+
+# Disconnect from spark
+
+When you finish your work, don't forget to give a rest to spark
+
+```{r spark_disconnect}
+spark_disconnect(sc)
+```
+
+Sometimes R loses its conection with spark, when it happens you need to disconnect and reconnect again. I don't know all the cases when it happens but I found twice:
+
+- Using `collect()` and your machine doesn't have enough memory
+- Stop a model trainning
+
+If you found another one, please let me know and I'll update this tutorial :)
+
+# That’s all folks
+
+Liked it? You can share this tutorial using the buttons below. If you still have any doubts or something to contribute, feel free to contact at `samuelmacedo@recife.ifpe.edu.br`.
+
+See ya!

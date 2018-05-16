@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Samuel Macêdo</title>
-    <link>/</link>
-    <description>Recent content on Samuel Macêdo</description>
+    <title>Sparklyr on Samuel Macêdo</title>
+    <link>/tags/sparklyr/</link>
+    <description>Recent content in Sparklyr on Samuel Macêdo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 16 May 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/sparklyr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,18 +20,6 @@
       <description>Welcome, friend :)
 In this tutorial, I am going to present you how to connect spark with R in your local machine. This will be a very brief tutorial but you will need it to understand when you read the next tutorials about feature transformation, supervised and unsupervised learning. If you have any doubts, don’t hesitate to contact me on samuelmacedo@recife.ifpe.edu.br.
 Let’s get to action… to do this task I use the sparklyr package.</description>
-    </item>
-    
-    <item>
-      <title>dplyr: basic functions</title>
-      <link>/2018/04/dplyr-basic-functions/</link>
-      <pubDate>Thu, 26 Apr 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/2018/04/dplyr-basic-functions/</guid>
-      <description>Welcome, friend :)
-In this tutorial, I am going to present you the basic functions in the dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). If you have any doubts, don’t hesitate to contact me on samuelmacedo@recife.ifpe.edu.br.
-Let’s get to action…first of all, to install dplyr, please use the commands below:
-install.packages(&amp;quot;dplyr&amp;quot;)library(dplyr)Before I start: as_tibble()Tibble is a modern reimagining of the data.frame. You don’t need to change your data.</description>
     </item>
     
   </channel>
