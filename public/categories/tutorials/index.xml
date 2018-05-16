@@ -12,11 +12,11 @@
     
     
     <item>
-      <title>sparklyr: connecting spark from R</title>
-      <link>/2018/05/sparklyr-connecting-spark-from-r/</link>
+      <title>sparklyr: connecting spark from R in local mode</title>
+      <link>/2018/05/sparklyr-connecting-spark-from-r-in-local-mode/</link>
       <pubDate>Wed, 16 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/05/sparklyr-connecting-spark-from-r/</guid>
+      <guid>/2018/05/sparklyr-connecting-spark-from-r-in-local-mode/</guid>
       <description>Welcome, friend :)
 In this tutorial, I am going to present you how to connect spark with R in your local machine. This will be a very brief tutorial but you will need it to understand when you read the next tutorials about feature transformation, supervised and unsupervised learning. If you have any doubts, don’t hesitate to contact me on samuelmacedo@recife.ifpe.edu.br.
 Let’s get to action… to do this task I use the sparklyr package.</description>
