@@ -6,10 +6,21 @@
     <description>Recent content in Tutorials on Samuel Macêdo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/tutorials/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>sparklyr: supervised learning</title>
+      <link>/2018/05/sparklyr-supervised-learning/</link>
+      <pubDate>Mon, 28 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/05/sparklyr-supervised-learning/</guid>
+      <description>Welcome, friend :)
+In this tutorial, I am going to present you how to perform supervised learning in R using the sparklyr package. The models that I am going to use are:
+Linear RegressionNaive BayesDecision TreeRandom ForestLogistic RegressionMultilayer PerceptronGradient Boosted TreeSupport Vector MachineIf you don’t know how to connect spark in R, don’t worry…check this out. If you have any question or suggestions, don’t hesitate to contact me on samuelmacedo@recife.</description>
+    </item>
     
     <item>
       <title>sparklyr: connecting spark in local mode</title>

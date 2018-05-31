@@ -1,0 +1,195 @@
+---
+title: 'sparklyr: supervised learning'
+author: "Samuel Macêdo"
+date: '2018-05-28'
+categories: ["tutorials"]
+tags: ["sparklyr"]
+description: "This tutorial will present you how to train, predict and evaluate your models."
+--- 
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(collapse = TRUE)
+
+options(scipen=999)
+```
+
+Welcome, friend :)
+
+In this tutorial, I am going to present you how to perform supervised learning in R using the [sparklyr](https://spark.rstudio.com/) package. The models that I am going to use are: 
+
+- Linear Regression 
+- Naive Bayes
+- Decision Tree
+- Random Forest 
+- Logistic Regression
+- Multilayer Perceptron
+- Gradient Boosted Tree
+- Support Vector Machine
+
+If you don't know how to connect spark in R, don't worry...check [this](http://samuelmacedo.netlify.com/2018/05/sparklyr-connecting-spark-in-local-mode/) out. If you have any question or suggestions, don’t hesitate to contact me on `samuelmacedo@recife.ifpe.edu.br`. 
+
+Let’s get to action… 
+
+# Loading data
+
+First of all, we need to make a connection between spark and R. After, we are going to add data to connection, transforming a data frame in a spark data frame.
+
+```{r load_data}
+library(sparklyr)
+library(dplyr) # we'll need this to do some manipulations on data
+
+sc <- spark_connect(master = "local")
+
+# using iris for binary classification examples
+iris_bin_tbl <- sdf_copy_to(sc, iris, name = "iris_bin_tbl", overwrite = TRUE) %>% 
+  filter(Species != "setosa")
+
+# using iris for multiclass classification examples
+iris_tbl <- sdf_copy_to(sc, iris, name = "iris_tbl", overwrite = TRUE)
+
+# using mtcars for regression examples
+mtcars_tbl <- sdf_copy_to(sc, mtcars, name = "mtcars_tbl", overwrite = TRUE)
+```
+
+# Partitioning in training and testing
+
+You can partition your data as you like: 70/30, 75/25, 80/20... 
+
+```{r}
+# for iris_bin_tbl
+partitions <- iris_bin_tbl %>%
+  sdf_partition(training = 0.7, test = 0.3, seed = 1111)
+
+iris_bin_training <- partitions$training
+iris_bin_test <- partitions$test
+
+# for iris_tbl
+partitions <- iris_tbl %>%
+  sdf_partition(training = 0.7, test = 0.3, seed = 1111)
+
+iris_training <- partitions$training
+iris_test <- partitions$test
+
+# for mtcars_tbl
+partitions <- mtcars_tbl %>%
+  sdf_partition(training = 0.7, test = 0.3, seed = 1111)
+
+mtcars_training <- partitions$training
+mtcars_test <- partitions$test
+```
+
+# Training, predicting and evaluating your models
+
+Now that you split your data in training and test, let's move to the fun part: train your model, make predictions and, of course, evaluate the results. Let's see a summary of how each of these steps works in sparklyr.
+
+- Model training: Basically, all the models have the same syntax: `your_model <- ml_function(training_data, formula)`. Some models, like Random Forest, perform more than one type of prediction, in these cases you have to add `type` parameter. Multiplayer perceptron is a quite different because you have to input layers configuration, but it isn't difficult at all.  
+
+- Make predictions: After training, you need to include the prediction column in your spark data frame. Only you have to do is to use `pred <- sdf_predict(test_data, your_model)`. 
+
+- Evaluating your model: Here, you have to use the evaluator according to your output. You can use one of this in `pred` data frame: `ml_regression_evaluator()`, `ml_binary_classification_evaluator()` or `ml_multiclass_classification_evaluator()`. Sparklyr doesn't support a function for confusion matrix yet, if you want to analyse this, you can use `dplyr::collect(pred)` and use `table(groundtruth, prediction)`. WARNING: Don't use `collect()` when you have a data frame larger than your memory, you'll lose the connection with spark. I suggest you estimate your confusion matrix with a sample using `sdf_sample()`. I know...I know that is not the best solution but it is what we have for while :(
+
+Does it seem complicated? Don't worry... let's check it out how easy is to train your models with sparklyr :)
+
+## Training your model
+
+```{r training}
+# linear regression
+lm_model <- mtcars_training %>%
+  ml_linear_regression(mpg ~ .)
+
+# naive bayes
+nb_model <- iris_training %>%
+  ml_naive_bayes(Species ~ .)
+
+# decision tree
+dt_model <- iris_training %>%
+  ml_decision_tree(Species ~ .)
+
+# random forest (regression)
+rf_model_reg <- mtcars_training %>%
+  ml_random_forest(cyl ~ ., type = "regression")
+
+# random forest (classification)
+rf_model_class <- iris_training %>%
+  ml_random_forest(Species ~ ., type = "classification")
+
+# gradient boosted tree (regression)
+gbt_model_reg <- mtcars_training %>%
+  ml_gradient_boosted_trees(cyl ~ ., type = "regression")
+
+# gradient boosted tree (binary). Multiclass classification is not implemented unitl now. When it works I'll update this tutorial
+gbt_model_bin <- iris_bin_training %>% 
+  ml_gradient_boosted_trees(Species ~ ., type = "classification")
+
+# logistic regression
+lr_model <- iris_bin_training %>%
+  ml_logistic_regression(Species ~ .)
+
+# multilayer perceptron
+mlp_model <- iris_training %>%
+  ml_multilayer_perceptron(Species ~ ., layers = c(4,3,3))
+
+# suport vector machine (binary). Multiclass classification is not implemented unitl now. When it works I'll update this tutorial
+svm_model <- iris_bin_training %>%
+  ml_linear_svc(Species ~ .)
+```
+
+## Predicting
+
+Remember, only thing you have to do is use `pred <- sdf_predict(test_data, your_model)`, let's check three examples.
+
+```{r prediction}
+pred_lm <- sdf_predict(mtcars_test, lm_model) # linear regression - regression
+pred_gbt_bin <- sdf_predict(iris_bin_test, gbt_model_bin) # gradient tree boosting - binary
+pred_nb <- sdf_predict(iris_test, nb_model)   # naive bayes - multiclass
+```
+
+For the others models just use the same way...try it and have fun ;)
+
+## Evaluating
+
+In this part, I have to give you some details. For example, let's take a look in `ml_binary_classification_eval()`.
+
+```{r evaluating, eval = FALSE}
+ml_binary_classification_eval(x, label_col = "label",
+  prediction_col = "prediction", metric_name = "areaUnderROC")
+```
+
+Note that you have to pass the parameters `label_col` and `prediction_col`. You don't need to "worry" about it because sparklyr create these columns with same default name when you use `sdf_predict()`, look:
+
+```{r predictions_naive bayes, eval = TRUE}
+dplyr::glimpse(pred_nb)
+```
+
+Did you see? `pred_nb` contains the columns named `label` and `prediction`. That is why you just need to pass `pred_nb` to your evaluator. Easy, isn't it? Take a look in these examples:
+
+```{r}
+# gradient tree boosting
+ml_binary_classification_evaluator(pred_gbt_bin)
+
+# naive bayes
+ml_multiclass_classification_evaluator(pred_nb)
+```
+
+But, why am I using worry in quotation marks? It's because some models don't create the column `label`, for example, `ml_linear_regression()`. Let's check `pred_lm` out!
+
+```{r pred_lm}
+dplyr::glimpse(pred_lm)
+```
+
+OMG!!! What am I supposed to do? Easy, just pass `label_col = "your_output"` as parameter, in this case, `mpg`
+
+```{r}
+ml_regression_evaluator(pred_lm, label_col = "mpg")
+```
+
+## That's all folks
+
+Liked it? You can share this tutorial using the buttons below.
+If you want to contribute with my website you can fork me on [github](https://github.com/samuelmacedo83/my_webpage).
+If you still have any doubts feel free to contact at `samuelmacedo@recife.ifpe.edu.br`.
+
+See ya!
