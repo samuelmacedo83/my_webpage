@@ -17,7 +17,7 @@ options(scipen=999)
 set.seed(123)
 ```
 
-Welcome, friend :)
+Welcome, friend :) 
 
 This is another tutorial about spark using the [sparklyr](https://spark.rstudio.com/) package. In this way, I am going to present you how tuning your model parameters. It's not so difficult but there is some details that I have to tell you. If you are not confident about trainning your models in spark yet, check [my previous](http://samuelmacedo.netlify.com/2018/05/sparklyr-supervised-learning/) post and come back here later :)
 
