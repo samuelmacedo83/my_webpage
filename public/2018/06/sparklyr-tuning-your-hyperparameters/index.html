@@ -1,0 +1,745 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.43 with theme Tranquilpeak 0.4.3-BETA">
+    <title>sparklyr: tuning your hyperparameters</title>
+    <meta name="author" content="Samuel Macêdo">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+    <meta name="description" content="This tutorial will present you how to choose the hyperparameters to your model.">
+    <meta property="og:description" content="This tutorial will present you how to choose the hyperparameters to your model.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="sparklyr: tuning your hyperparameters">
+    <meta property="og:url" content="/2018/06/sparklyr-tuning-your-hyperparameters/">
+    <meta property="og:site_name" content="Samuel Macêdo">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Samuel Macêdo">
+    <meta name="twitter:description" content="This tutorial will present you how to choose the hyperparameters to your model.">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="/images/letter_r.jpg">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-118473149-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Samuel Macêdo</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#home">
+    
+    
+    
+      
+        <img class="header-picture" src="/images/letter_r.jpg" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="/images/letter_r.jpg" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Samuel Macêdo</h4>
+        
+          <h5 class="sidebar-profile-bio">Data scientist and R developer</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/samuelmacedo83">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/samuel-mac%C3%AAdo-755a8763/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      sparklyr: tuning your hyperparameters
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-06-21T00:00:00Z">
+        
+  June 21, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/tutorials">tutorials</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Welcome, friend :)</p>
+<p>This is another tutorial about spark using the <a href="https://spark.rstudio.com/">sparklyr</a> package. In this way, I am going to present you how tuning your model parameters. It’s not so difficult but there is some details that I have to tell you. If you are not confident about trainning your models in spark yet, check <a href="http://samuelmacedo.netlify.com/2018/05/sparklyr-supervised-learning/">my previous</a> post and come back here later :)</p>
+<p>Let’s get to action…</p>
+<div id="pipeline" class="section level1">
+<h1>Pipeline</h1>
+<p>First of all, you need to create a pipeline. A pipeline is just a sequence of steps that you are going to execute in your data. In sparklyr context, you don’t point a pipeline directly to your data, you have to point to connection where the data is connected. Let’s see.</p>
+<pre class="r"><code>library(sparklyr)
+
+sc &lt;- spark_connect(master = &quot;local&quot;)
+
+pipeline &lt;- ml_pipeline(sc)</code></pre>
+<p>Now that you have created a pipeline object, you can add the steps that you like to use. To add these steps you can use the <code>%&gt;%</code> operator. I’ll perform an example using random forest in our well-known iris dataset.</p>
+<pre class="r"><code>iris_tbl &lt;- sdf_copy_to(sc, iris, name = &quot;iris_tbl&quot;, overwrite = TRUE)
+
+pipeline &lt;- ml_pipeline(sc) %&gt;%
+  ft_r_formula(Species ~ .) %&gt;%
+  ml_random_forest_classifier()</code></pre>
+<p>The <code>ft_r_formula()</code> function creates two columns named features and label. You don’t need to worry, it’s just a way to “tell” to spark what the predictors are (features) and the response (label) using the R syntax (<code>Species ~ .</code>). If you want to check, run it into your console <code>ft_r_formula(iris_tbl, Species ~ .)</code>.</p>
+<p>The <code>ml_random_forest()</code>, used in the <a href="http://samuelmacedo.netlify.com/2018/05/sparklyr-supervised-learning/">previous post</a>, is a wrapper and inside it there are two other functions: <code>ml_random_forest_classifier()</code> (for classification) and <code>ml_random_forest_regressor()</code> (for regression). I’d rather be very explicit concerning the steps inside the pipeline, it’s a good practice to avoid a headache when you have to read a very long pipeline with a lot of steps :(<br />
+Let’s see how the object <code>pipeline</code> looks like!</p>
+<pre class="r"><code>pipeline
+## Pipeline (Estimator) with 2 stages
+## &lt;pipeline_192c555d699a&gt; 
+##   Stages 
+##   |--1 RFormula (Estimator)
+##   |    &lt;r_formula_192c5cf9e6a&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |     (Parameters)
+##   |      force_index_label: FALSE
+##   |      formula: Species ~ .
+##   |      handle_invalid: error
+##   |      stringIndexerOrderType: frequencyDesc
+##   |--2 RandomForestClassifier (Estimator)
+##   |    &lt;random_forest_classifier_192c5efe102c&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |      prediction_col: prediction
+##   |      probability_col: probability
+##   |      raw_prediction_col: rawPrediction
+##   |     (Parameters)
+##   |      cache_node_ids: FALSE
+##   |      checkpoint_interval: 10
+##   |      feature_subset_strategy: auto
+##   |      impurity: gini
+##   |      max_bins: 32
+##   |      max_depth: 5
+##   |      max_memory_in_mb: 256
+##   |      min_info_gain: 0
+##   |      min_instances_per_node: 1
+##   |      num_trees: 20
+##   |      seed: 207336481
+##   |      subsampling_rate: 1</code></pre>
+<p>As you can see, our pipeline has two stages: RFormula and RandomForestClassifier. In each one the parameters that may be used are specified</p>
+</div>
+<div id="the-grid-parameters" class="section level1">
+<h1>The grid parameters</h1>
+<p>To control the parameters that you want to check, you need to create a grid object. An example is shown below.</p>
+<pre class="r"><code>grid &lt;- list(
+  random_forest = list(
+    num_trees = c(5,10),
+    impurity = c(&quot;entropy&quot;, &quot;gini&quot;)
+  )
+)</code></pre>
+<p>In this grid that I created, I will test what the best combination of parameters is, varying the number of trees, and the impurity. You can change and use any combination that you want to check. There is one thing that you have to keep in mind, the name of the list inside the grid has to be the same name used by the classifier. Let’s look our pipeline again!</p>
+<pre class="r"><code>pipeline
+## Pipeline (Estimator) with 2 stages
+## &lt;pipeline_192c555d699a&gt; 
+##   Stages 
+##   |--1 RFormula (Estimator)
+##   |    &lt;r_formula_192c5cf9e6a&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |     (Parameters)
+##   |      force_index_label: FALSE
+##   |      formula: Species ~ .
+##   |      handle_invalid: error
+##   |      stringIndexerOrderType: frequencyDesc
+##   |--2 RandomForestClassifier (Estimator)
+##   |    &lt;random_forest_classifier_192c5efe102c&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |      prediction_col: prediction
+##   |      probability_col: probability
+##   |      raw_prediction_col: rawPrediction
+##   |     (Parameters)
+##   |      cache_node_ids: FALSE
+##   |      checkpoint_interval: 10
+##   |      feature_subset_strategy: auto
+##   |      impurity: gini
+##   |      max_bins: 32
+##   |      max_depth: 5
+##   |      max_memory_in_mb: 256
+##   |      min_info_gain: 0
+##   |      min_instances_per_node: 1
+##   |      num_trees: 20
+##   |      seed: 207336481
+##   |      subsampling_rate: 1</code></pre>
+<p>In our example, the random forest classifier is on the second stage, take a look on the second line, did you see <code>&lt;random_forest_classifier_###########&gt;</code>? That is the name you have to use, ok? You don’t need to use the entire name, note that I just use the beginning, for short.</p>
+</div>
+<div id="cross-validator-object" class="section level1">
+<h1>Cross validator object</h1>
+<p>Our final step is to create a cross validator object. Let’s check it out.</p>
+<pre class="r"><code>cv &lt;- ml_cross_validator(
+  sc, estimator = pipeline, estimator_param_maps = grid,
+  evaluator = ml_multiclass_classification_evaluator(sc),
+  num_folds = 5,
+  parallelism = 4
+)</code></pre>
+<p>As you can see, you have to pass your connection, pipeline and the grid parameters that you want to test. Make sure you are using the correct evaluator, in our case, it is multiclass. The <code>num_folds</code> is how many folders you want to use in your train-validation split and <code>parallelism</code> is the number of threads to use when running parallel algorithms.</p>
+</div>
+<div id="train-and-check-the-metrics" class="section level1">
+<h1>Train and check the metrics</h1>
+<p>Now, we arrived to the funniest part, let’s train and check the metrics out!</p>
+<pre class="r"><code># Train the models
+cv_model &lt;- ml_fit(cv, iris_tbl)
+
+# Print the metrics
+ml_validation_metrics(cv_model)
+##          f1 impurity_1 num_trees_1
+## 1 0.9563436    entropy           5
+## 2 0.9622804    entropy          10
+## 3 0.9630614       gini           5
+## 4 0.9461037       gini          10</code></pre>
+<p>In our toy example, the best parameters were impurity Gini with 5 number of trees, because f1-score was the greater (0.963). Now it is your turn, try different parameters and have some fun :)</p>
+<div id="thats-all-folks" class="section level2">
+<h2>That’s all folks</h2>
+<p>Liked it? You can share this tutorial using the buttons below. If you want to contribute with my website you can fork me on <a href="https://github.com/samuelmacedo83/my_webpage">github</a>. If you still have any doubts feel free to contact at <code>samuelmacedo@recife.ifpe.edu.br</code>.</p>
+<p>See ya!</p>
+</div>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/sparklyr/">sparklyr</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/05/sparklyr-supervised-learning/" data-tooltip="sparklyr: supervised learning">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://samuelmacedo.netlify.com/2018/06/sparklyr-tuning-your-hyperparameters/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://samuelmacedo.netlify.com/2018/06/sparklyr-tuning-your-hyperparameters/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.linkedin.com/shareArticle?url=https://samuelmacedo.netlify.com/2018/06/sparklyr-tuning-your-hyperparameters/">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Samuel Macêdo. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/05/sparklyr-supervised-learning/" data-tooltip="sparklyr: supervised learning">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://samuelmacedo.netlify.com/2018/06/sparklyr-tuning-your-hyperparameters/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://samuelmacedo.netlify.com/2018/06/sparklyr-tuning-your-hyperparameters/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.linkedin.com/shareArticle?url=https://samuelmacedo.netlify.com/2018/06/sparklyr-tuning-your-hyperparameters/">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://samuelmacedo.netlify.com%2F2018%2F06%2Fsparklyr-tuning-your-hyperparameters%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://samuelmacedo.netlify.com%2F2018%2F06%2Fsparklyr-tuning-your-hyperparameters%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.linkedin.com/shareArticle?url=https://samuelmacedo.netlify.com%2F2018%2F06%2Fsparklyr-tuning-your-hyperparameters%2F">
+          <i class="fa fa-linkedin"></i><span>Share on LinkedIn</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="images/my_image.jpg" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Samuel Macêdo</h4>
+    
+      <div id="about-card-bio">Data scientist and R developer</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-envelope"></i>
+      </div>
+      <div id="email_job" align="center"> samuelmacedo@recife.ifpe.edu.br </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/06/sparklyr-tuning-your-hyperparameters/">
+                <h3 class="media-heading">sparklyr: tuning your hyperparameters</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jun 6, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Welcome, friend :)
+This is another tutorial about spark using the sparklyr package. In this way, I am going to present you how tuning your model parameters. It’s not so difficult but there is some details that I have to tell you. If you are not confident about trainning your models in spark yet, check my previous post and come back here later :)
+Let’s get to action…
+PipelineFirst of all, you need to create a pipeline.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/sparklyr-supervised-learning/">
+                <h3 class="media-heading">sparklyr: supervised learning</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Welcome, friend :)
+In this tutorial, I am going to present you how to perform supervised learning in R using the sparklyr package. The models that I am going to use are:
+Linear RegressionNaive BayesDecision TreeRandom ForestLogistic RegressionMultilayer PerceptronGradient Boosted TreeSupport Vector MachineIf you don’t know how to connect spark in R, don’t worry…check this out. If you have any question or suggestions, don’t hesitate to contact me on samuelmacedo@recife.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/05/sparklyr-connecting-spark-in-local-mode/">
+                <h3 class="media-heading">sparklyr: connecting spark in local mode</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Welcome, friend :)
+In this tutorial, I am going to present you how to connect spark with R in your local machine. This will be a very brief tutorial but you will need it to understand when you read the next tutorials about feature transformation, supervised and unsupervised learning. If you have any doubts, don’t hesitate to contact me on samuelmacedo@recife.ifpe.edu.br.
+Let’s get to action… to do this task I use the sparklyr package.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/dplyr-basic-functions/">
+                <h3 class="media-heading">dplyr: basic functions</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Welcome, friend :)
+In this tutorial, I am going to present you the basic functions in the dplyr package: select(), filter(), mutate(), transmute(), group_by() and summarise(). If you have any doubts, don’t hesitate to contact me on samuelmacedo@recife.ifpe.edu.br.
+Let’s get to action…first of all, to install dplyr, please use the commands below:
+install.packages(&quot;dplyr&quot;)library(dplyr)Before I start: as_tibble()Tibble is a modern reimagining of the data.frame. You don’t need to change your data.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         4 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('/images/ocean_1.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+    
+  </body>
+</html>
+

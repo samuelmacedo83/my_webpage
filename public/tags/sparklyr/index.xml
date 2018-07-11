@@ -6,10 +6,22 @@
     <description>Recent content in Sparklyr on Samuel Macêdo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 Jun 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/sparklyr/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>sparklyr: tuning your hyperparameters</title>
+      <link>/2018/06/sparklyr-tuning-your-hyperparameters/</link>
+      <pubDate>Thu, 21 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/06/sparklyr-tuning-your-hyperparameters/</guid>
+      <description>Welcome, friend :)
+This is another tutorial about spark using the sparklyr package. In this way, I am going to present you how tuning your model parameters. It’s not so difficult but there is some details that I have to tell you. If you are not confident about trainning your models in spark yet, check my previous post and come back here later :)
+Let’s get to action…
+PipelineFirst of all, you need to create a pipeline.</description>
+    </item>
     
     <item>
       <title>sparklyr: supervised learning</title>
