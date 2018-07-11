@@ -1,0 +1,117 @@
+---
+title: 'sparklyr: tuning your hyperparameter '
+author: "Samuel Macêdo"
+date: '2018-06-21'
+categories: ["tutorials"]
+tags: ["sparklyr"]
+description: "This tutorial will present you how to choose the hyperparameters to your model."
+--- 
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(collapse = TRUE)
+
+options(scipen=999)
+set.seed(123)
+```
+
+Welcome, friend :)
+
+This is another tutorial about spark using the [sparklyr](https://spark.rstudio.com/) package. In this way, I am going to present you how tuning your model parameters. It's not so difficult but there is some details that I have to tell you. If you are not confident about trainning your models in spark yet, check [my previous](http://samuelmacedo.netlify.com/2018/05/sparklyr-supervised-learning/) post and come back here later :)
+
+Let’s get to action… 
+
+# Pipeline
+
+First of all, you need to create a pipeline. A pipeline is just a sequence of steps that you are going to execute in your data. In sparklyr context, you don't point a pipeline directly to your data, you have to point to connection where the data is connected. Let's see.
+
+```{r}
+library(sparklyr)
+
+sc <- spark_connect(master = "local")
+
+pipeline <- ml_pipeline(sc)
+```
+
+Now that you have created a pipeline object, you can add the steps that you like to use. To add these steps you can use the `%>%` operator. I'll perform an example using random forest in our well-known iris dataset.  
+
+```{r}
+iris_tbl <- sdf_copy_to(sc, iris, name = "iris_tbl", overwrite = TRUE)
+
+pipeline <- ml_pipeline(sc) %>%
+  ft_r_formula(Species ~ .) %>%
+  ml_random_forest_classifier()
+```
+
+
+The `ft_r_formula()` function creates two columns named features and label. You don't need to worry, it's just a way to "tell" to spark what the predictors are (features) and the response (label) using the R syntax (`Species ~ .`). If you want to check, run it into your console `ft_r_formula(iris_tbl, Species ~ .)`.
+
+The `ml_random_forest()`, used in the [previous post](http://samuelmacedo.netlify.com/2018/05/sparklyr-supervised-learning/), is a wrapper and inside it there are two other functions: `ml_random_forest_classifier()` (for classification) and  `ml_random_forest_regressor()` (for regression). I'd rather be very explicit concerning the steps inside the pipeline, it's a good practice to avoid a headache when you have to read a very long pipeline with a lot of steps :(   
+Let's see how the object `pipeline` looks like!
+
+```{r pipeline1}
+pipeline
+```
+
+As you can see, our pipeline has two stages: RFormula and RandomForestClassifier. In each one the parameters that may be used are specified
+
+# The grid parameters
+
+To control the parameters that you want to check, you need to create a grid object. An example is shown below.
+
+```{r grid}
+grid <- list(
+  random_forest = list(
+    num_trees = c(5,10),
+    impurity = c("entropy", "gini")
+  )
+)
+```
+
+In this grid that I created, I will test what the best combination of parameters is, varying the number of trees, and the impurity. You can change and use any combination that you want to check. There is one thing that you have to keep in mind, the name of the list inside the grid has to be the same name used by the classifier. Let's look our pipeline again!
+
+```{r pipeline2}
+pipeline
+```
+
+In our example, the random forest classifier is on the second stage, take a look on the second line, did you see `<random_forest_classifier_###########>`? That is the name you have to use, ok? You don't need to use the entire name, note that I just use the beginning, for short. 
+
+# Cross validator object
+
+Our final step is to create a cross validator object. Let's check it out.
+
+```{r cross_validator}
+cv <- ml_cross_validator(
+  sc, estimator = pipeline, estimator_param_maps = grid,
+  evaluator = ml_multiclass_classification_evaluator(sc),
+  num_folds = 5,
+  parallelism = 4
+)
+```
+
+As you can see, you have to pass your connection, pipeline and the grid parameters that you want to test. Make sure you are using the correct evaluator, in our case, it is multiclass. The `num_folds` is how many folders you want to use in your train-validation split and `parallelism` is the number of threads to use when running parallel algorithms.
+
+# Train and check the metrics
+
+Now, we arrived to the funniest part, let's train and check the metrics out!
+
+```{r}
+# Train the models
+cv_model <- ml_fit(cv, iris_tbl)
+
+# Print the metrics
+ml_validation_metrics(cv_model)
+```
+
+In our toy example, the best parameters were impurity Gini with 5 number of trees, because f1-score was the greater (0.963). Now it is your turn, try different parameters and have some fun :)
+
+
+## That's all folks
+
+Liked it? You can share this tutorial using the buttons below.
+If you want to contribute with my website you can fork me on [github](https://github.com/samuelmacedo83/my_webpage).
+If you still have any doubts feel free to contact at `samuelmacedo@recife.ifpe.edu.br`.
+
+See ya!

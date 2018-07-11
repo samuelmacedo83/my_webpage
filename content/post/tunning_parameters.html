@@ -1,0 +1,146 @@
+---
+title: 'sparklyr: tuning your hyperparameter '
+author: "Samuel Macêdo"
+date: '2018-06-21'
+categories: ["tutorials"]
+tags: ["sparklyr"]
+description: "This tutorial will present you how to choose the hyperparameters to your model."
+--- 
+
+
+
+<p>Welcome, friend :)</p>
+<p>This is another tutorial about spark using the <a href="https://spark.rstudio.com/">sparklyr</a> package. In this way, I am going to present you how tuning your model parameters. It’s not so difficult but there is some details that I have to tell you. If you are not confident about trainning your models in spark yet, check <a href="http://samuelmacedo.netlify.com/2018/05/sparklyr-supervised-learning/">my previous</a> post and come back here later :)</p>
+<p>Let’s get to action…</p>
+<div id="pipeline" class="section level1">
+<h1>Pipeline</h1>
+<p>First of all, you need to create a pipeline. A pipeline is just a sequence of steps that you are going to execute in your data. In sparklyr context, you don’t point a pipeline directly to your data, you have to point to connection where the data is connected. Let’s see.</p>
+<pre class="r"><code>library(sparklyr)
+
+sc &lt;- spark_connect(master = &quot;local&quot;)
+
+pipeline &lt;- ml_pipeline(sc)</code></pre>
+<p>Now that you have created a pipeline object, you can add the steps that you like to use. To add these steps you can use the <code>%&gt;%</code> operator. I’ll perform an example using random forest in our well-known iris dataset.</p>
+<pre class="r"><code>iris_tbl &lt;- sdf_copy_to(sc, iris, name = &quot;iris_tbl&quot;, overwrite = TRUE)
+
+pipeline &lt;- ml_pipeline(sc) %&gt;%
+  ft_r_formula(Species ~ .) %&gt;%
+  ml_random_forest_classifier()</code></pre>
+<p>The <code>ft_r_formula()</code> function creates two columns named features and label. You don’t need to worry, it’s just a way to “tell” to spark what the predictors are (features) and the response (label) using the R syntax (<code>Species ~ .</code>). If you want to check, run it into your console <code>ft_r_formula(iris_tbl, Species ~ .)</code>.</p>
+<p>The <code>ml_random_forest()</code>, used in the <a href="http://samuelmacedo.netlify.com/2018/05/sparklyr-supervised-learning/">previous post</a>, is a wrapper and inside it there are two other functions: <code>ml_random_forest_classifier()</code> (for classification) and <code>ml_random_forest_regressor()</code> (for regression). I’d rather be very explicit concerning the steps inside the pipeline, it’s a good practice to avoid a headache when you have to read a very long pipeline with a lot of steps :(<br />
+Let’s see how the object <code>pipeline</code> looks like!</p>
+<pre class="r"><code>pipeline
+## Pipeline (Estimator) with 2 stages
+## &lt;pipeline_cc4786a83&gt; 
+##   Stages 
+##   |--1 RFormula (Estimator)
+##   |    &lt;r_formula_cc453596cf7&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |     (Parameters)
+##   |      force_index_label: FALSE
+##   |      formula: Species ~ .
+##   |      handle_invalid: error
+##   |      stringIndexerOrderType: frequencyDesc
+##   |--2 RandomForestClassifier (Estimator)
+##   |    &lt;random_forest_classifier_cc447b23f2c&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |      prediction_col: prediction
+##   |      probability_col: probability
+##   |      raw_prediction_col: rawPrediction
+##   |     (Parameters)
+##   |      cache_node_ids: FALSE
+##   |      checkpoint_interval: 10
+##   |      feature_subset_strategy: auto
+##   |      impurity: gini
+##   |      max_bins: 32
+##   |      max_depth: 5
+##   |      max_memory_in_mb: 256
+##   |      min_info_gain: 0
+##   |      min_instances_per_node: 1
+##   |      num_trees: 20
+##   |      seed: 207336481
+##   |      subsampling_rate: 1</code></pre>
+<p>As you can see, our pipeline has two stages: RFormula and RandomForestClassifier. In each one the parameters that may be used are specified</p>
+</div>
+<div id="the-grid-parameters" class="section level1">
+<h1>The grid parameters</h1>
+<p>To control the parameters that you want to check, you need to create a grid object. An example is shown below.</p>
+<pre class="r"><code>grid &lt;- list(
+  random_forest = list(
+    num_trees = c(5,10),
+    impurity = c(&quot;entropy&quot;, &quot;gini&quot;)
+  )
+)</code></pre>
+<p>In this grid that I created, I will test what the best combination of parameters is, varying the number of trees, and the impurity. You can change and use any combination that you want to check. There is one thing that you have to keep in mind, the name of the list inside the grid has to be the same name used by the classifier. Let’s look our pipeline again!</p>
+<pre class="r"><code>pipeline
+## Pipeline (Estimator) with 2 stages
+## &lt;pipeline_cc4786a83&gt; 
+##   Stages 
+##   |--1 RFormula (Estimator)
+##   |    &lt;r_formula_cc453596cf7&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |     (Parameters)
+##   |      force_index_label: FALSE
+##   |      formula: Species ~ .
+##   |      handle_invalid: error
+##   |      stringIndexerOrderType: frequencyDesc
+##   |--2 RandomForestClassifier (Estimator)
+##   |    &lt;random_forest_classifier_cc447b23f2c&gt; 
+##   |     (Parameters -- Column Names)
+##   |      features_col: features
+##   |      label_col: label
+##   |      prediction_col: prediction
+##   |      probability_col: probability
+##   |      raw_prediction_col: rawPrediction
+##   |     (Parameters)
+##   |      cache_node_ids: FALSE
+##   |      checkpoint_interval: 10
+##   |      feature_subset_strategy: auto
+##   |      impurity: gini
+##   |      max_bins: 32
+##   |      max_depth: 5
+##   |      max_memory_in_mb: 256
+##   |      min_info_gain: 0
+##   |      min_instances_per_node: 1
+##   |      num_trees: 20
+##   |      seed: 207336481
+##   |      subsampling_rate: 1</code></pre>
+<p>In our example, the random forest classifier is on the second stage, take a look on the second line, did you see <code>&lt;random_forest_classifier_###########&gt;</code>? That is the name you have to use, ok? You don’t need to use the entire name, note that I just use the beginning, for short.</p>
+</div>
+<div id="cross-validator-object" class="section level1">
+<h1>Cross validator object</h1>
+<p>Our final step is to create a cross validator object. Let’s check it out.</p>
+<pre class="r"><code>cv &lt;- ml_cross_validator(
+  sc, estimator = pipeline, estimator_param_maps = grid,
+  evaluator = ml_multiclass_classification_evaluator(sc),
+  num_folds = 5,
+  parallelism = 4
+)</code></pre>
+<p>As you can see, you have to pass your connection, pipeline and the grid parameters that you want to test. Make sure you are using the correct evaluator, in our case, it is multiclass. The <code>num_folds</code> is how many folders you want to use in your train-validation split and <code>parallelism</code> is the number of threads to use when running parallel algorithms.</p>
+</div>
+<div id="train-and-check-the-metrics" class="section level1">
+<h1>Train and check the metrics</h1>
+<p>Now, we arrived to the funniest part, let’s train and check the metrics out!</p>
+<pre class="r"><code># Train the models
+cv_model &lt;- ml_fit(cv, iris_tbl)
+
+# Print the metrics
+ml_validation_metrics(cv_model)
+##          f1 impurity_1 num_trees_1
+## 1 0.9563436    entropy           5
+## 2 0.9622804    entropy          10
+## 3 0.9630614       gini           5
+## 4 0.9461037       gini          10</code></pre>
+<p>In our toy example, the best parameters were impurity Gini with 5 number of trees, because f1-score was the greater (0.963). Now it is your turn, try different parameters and have some fun :)</p>
+<div id="thats-all-folks" class="section level2">
+<h2>That’s all folks</h2>
+<p>Liked it? You can share this tutorial using the buttons below. If you want to contribute with my website you can fork me on <a href="https://github.com/samuelmacedo83/my_webpage">github</a>. If you still have any doubts feel free to contact at <code>samuelmacedo@recife.ifpe.edu.br</code>.</p>
+<p>See ya!</p>
+</div>
+</div>
