@@ -1,5 +1,5 @@
 ---
-title: 'sparklyr: tuning your hyperparameter '
+title: 'sparklyr: tuning your hyperparameters'
 author: "Samuel Macêdo"
 date: '2018-06-21'
 categories: ["tutorials"]
