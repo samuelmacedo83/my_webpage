@@ -1,7 +1,7 @@
 ---
-title: 'sparklyr: tuning your hyperparameter '
+title: "sparklyr: tuning your hyperparameters"
 author: "Samuel Macêdo"
-date: '2018-06-21'
+date: "2018-06-21"
 categories: ["tutorials"]
 tags: ["sparklyr"]
 description: "This tutorial will present you how to choose the hyperparameters to your model."
@@ -31,10 +31,10 @@ pipeline &lt;- ml_pipeline(sc) %&gt;%
 Let’s see how the object <code>pipeline</code> looks like!</p>
 <pre class="r"><code>pipeline
 ## Pipeline (Estimator) with 2 stages
-## &lt;pipeline_333c70067680&gt; 
+## &lt;pipeline_192c555d699a&gt; 
 ##   Stages 
 ##   |--1 RFormula (Estimator)
-##   |    &lt;r_formula_333c30437cd&gt; 
+##   |    &lt;r_formula_192c5cf9e6a&gt; 
 ##   |     (Parameters -- Column Names)
 ##   |      features_col: features
 ##   |      label_col: label
@@ -44,7 +44,7 @@ Let’s see how the object <code>pipeline</code> looks like!</p>
 ##   |      handle_invalid: error
 ##   |      stringIndexerOrderType: frequencyDesc
 ##   |--2 RandomForestClassifier (Estimator)
-##   |    &lt;random_forest_classifier_333c2a2f79d5&gt; 
+##   |    &lt;random_forest_classifier_192c5efe102c&gt; 
 ##   |     (Parameters -- Column Names)
 ##   |      features_col: features
 ##   |      label_col: label
@@ -78,10 +78,10 @@ Let’s see how the object <code>pipeline</code> looks like!</p>
 <p>In this grid that I created, I will test what the best combination of parameters is, varying the number of trees, and the impurity. You can change and use any combination that you want to check. There is one thing that you have to keep in mind, the name of the list inside the grid has to be the same name used by the classifier. Let’s look our pipeline again!</p>
 <pre class="r"><code>pipeline
 ## Pipeline (Estimator) with 2 stages
-## &lt;pipeline_333c70067680&gt; 
+## &lt;pipeline_192c555d699a&gt; 
 ##   Stages 
 ##   |--1 RFormula (Estimator)
-##   |    &lt;r_formula_333c30437cd&gt; 
+##   |    &lt;r_formula_192c5cf9e6a&gt; 
 ##   |     (Parameters -- Column Names)
 ##   |      features_col: features
 ##   |      label_col: label
@@ -91,7 +91,7 @@ Let’s see how the object <code>pipeline</code> looks like!</p>
 ##   |      handle_invalid: error
 ##   |      stringIndexerOrderType: frequencyDesc
 ##   |--2 RandomForestClassifier (Estimator)
-##   |    &lt;random_forest_classifier_333c2a2f79d5&gt; 
+##   |    &lt;random_forest_classifier_192c5efe102c&gt; 
 ##   |     (Parameters -- Column Names)
 ##   |      features_col: features
 ##   |      label_col: label

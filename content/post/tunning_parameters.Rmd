@@ -1,7 +1,7 @@
 ---
-title: 'sparklyr: tuning your hyperparameters'
+title: "sparklyr: tuning your hyperparameters"
 author: "Samuel Macêdo"
-date: '2018-06-21'
+date: "2018-06-21"
 categories: ["tutorials"]
 tags: ["sparklyr"]
 description: "This tutorial will present you how to choose the hyperparameters to your model."
